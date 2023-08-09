@@ -1,0 +1,42 @@
+.form-group {
+    margin-left:20px;
+    margin-right: 20px;
+}
+
+.form-group label {
+    font-size: 15px;
+    font-weight:800;
+   
+}
+
+.form-group input{
+    margin-top: 10px;
+}
+
+.form-group select{
+    margin-top: 10px;
+}
+
+form button{
+    font-size: 16px;
+    border:none;
+    border-radius: 4px;
+    color:#fff;
+    padding: 10px 25px;
+}
+
+
+
+.btn-sucess {
+    background-color: rgb(222, 107, 107);
+    margin-left: 20px;
+}
+.btn-sucess:hover{
+    background-color: rgb(234, 81, 81);
+}
+.btn-default {
+    background-color: rgb(75, 168, 245);
+}
+.btn-default:hover {
+    background-color: rgb(0, 116, 248);
+}
