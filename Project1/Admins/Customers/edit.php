@@ -143,29 +143,30 @@ include_once '../../Connects/close.php';
                 <?php  foreach ($customers AS $customer){
                     ?>
                     <form method="post" action="Update.php" role="form" >
+                        <input type="hidden" name="id" id="id" value="<?=$customer['id']?>">
                         <div class="form-group">
                             <label>Tên khách hàng</label>
-                            <input name="user_full" value="<?=$customer['name']?>" required class="form-control" placeholder="">
+                            <input name="name" value="<?=$customer['name']?>"  required class="form-control" placeholder="">
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input name="user_full" value="<?=$customer['email']?>" required class="form-control" placeholder="">
+                            <input name="email" value="<?=$customer['email']?>" required class="form-control" placeholder="">
                         </div>
                         <div class="form-group">
                             <label>Mật khẩu</label>
-                            <input name="user_full" value="<?=md5($customer['password'])?>" required class="form-control" placeholder="m5">
+                            <input name="password" value="<?=md5($customer['password'])?>" required class="form-control" placeholder="m5">
                         </div>
                         <div class="form-group">
                             <label>Số điện thoại</label>
-                            <input name="user_full" value="<?=$customer['phone']?>" required class="form-control" placeholder="">
+                            <input name="phone" value="<?=$customer['phone']?>" required class="form-control" placeholder="">
                         </div>
                         <div class="form-group">
                             <label>Giới tính</label>
-                            <input name="user_full" value="<?=$customer['gender']?>" required class="form-control" placeholder="">
+                            <input name="gender" value="<?=$customer['gender']?>" required class="form-control" placeholder="">
                         </div>
                         <div class="form-group">
                             <label>Địa chỉ</label>
-                            <input name="user_full" value="<?=$customer['address']?>" required class="form-control" placeholder="">
+                            <input name="address" value="<?=$customer['address']?>" required class="form-control" placeholder="">
                         </div>
                         <button class="btn-update">Cập Nhật</button>
                     </form>

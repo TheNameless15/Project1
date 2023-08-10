@@ -25,6 +25,7 @@ if(!isset($_SESSION['email'])){
           rel="stylesheet">
     <title>Update a publisher</title>
 </head>
+<body>
 <?php
 $id = $_GET['id'];
 include_once '../../Connects/open.php';
@@ -133,8 +134,8 @@ include_once '../../Connects/close.php';
                     ?>
                     <form method="post" action="update.php" role="form" >
                         <div class="form-group">
-                            <label>Tên nhà xuất bản:</label>
-                            <input name="user_full" value="<?=$publisher['name']?>" required class="form-control" placeholder="">
+                            <input type="hidden" name="id" value="<?=$publisher['id']?>">
+                            <input name="name" value="<?=$publisher['name']?>"  class="form-control" placeholder="">
                         </div>
                         <button class="btn-update">Cập Nhật</button>
                     </form>

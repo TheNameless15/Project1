@@ -13,7 +13,7 @@ $sql = "UPDATE books SET name = '$name',quantity ='$quantity',price ='$price',de
 mysqli_query($connect, $sql);
 mysqli_close($connect);
 //Kiểm tra ảnh đã tồn tại trong folder chưa
-if(!file_exists('../image/' . $image)){
+if(!file_exists('../../image/' . $image)){
     //Lấy path của ảnh
     $path = $_FILES['image']['tmp_name'];
     //Lưu ảnh

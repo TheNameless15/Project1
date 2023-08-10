@@ -140,7 +140,8 @@ foreach ($books AS $book){
                 <h1 class="page-header"><?=$book['name']?></h1>
                 <div class="row sm-gutter">
                     <div class="col l-6">
-                        <form action="" role="form" method="post">
+                        <form action="update.php" role="form" method="post">
+                            <input type="hidden" name="id" id="id" value="<?=$book['id']?>">
                             <div class="form-group">
                                 <label><?=$book['name']?></label>
                               <!--  <input name="prd_name" value="LAPTOP LENOVO IDEAPAD SLIM 5 PRO" required class="form-control" placeholder="">-->
@@ -157,7 +158,7 @@ foreach ($books AS $book){
 
                             <div class="form-group">
                                 <label> Mô tả sản phẩm</label>
-                                <textarea name="prd_details" class="form-cotrol"  rows="3" style="width: 100%;height: 175px;font-size: 1.25rem" ><?=$book['description']?></textarea>
+                                <textarea name="description" class="form-cotrol"  rows="3" style="width: 100%;height: 175px;font-size: 1.25rem" ><?=$book['description']?></textarea>
                             </div>
                             <!--<div class="form-group">
                                 <label>Phụ kiện</label>
@@ -207,7 +208,6 @@ foreach ($books AS $book){
 /*                                          }
                                            */?>
                             </select><br>-->
-                        </form>
                     </div>
                     <div class="col l-6">
                         <select name="category_id" class="form-control">
@@ -236,7 +236,7 @@ foreach ($books AS $book){
                         </select><br>
                         <div class="form-group">
                             <label>Ảnh sản phẩm</label>
-                            <input type="file" required name="prd_image" onchange="chooseFile(this)" accept="image/jpeg, image/gif, image/png">
+                            <input type="file" name="image" onchange="chooseFile(this)" value="<?=$book['image']?>" accept="image/jpeg, image/gif, image/png">
                             <br>
                             <div>
                                 <img src="../../image/<?=$book['image']?>" alt="" id="prd-image" width="120px" height="150px">
@@ -289,6 +289,7 @@ foreach ($books AS $book){
                             <textarea name="prd_details" class="form-cotrol"  rows="3" style="width: 100%;height: 175px;font-size: 1.25rem" ><?php /*=$book['description']*/?></textarea>
                         </div>-->
                             <button class="btn-default">Làm mới</button>
+                    </form>
                     </div>
                 </div>
             </div>

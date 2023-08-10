@@ -133,8 +133,9 @@ foreach ($categories AS $category){
                 ?>
                     <form method="post" action="update.php" role="form" >
                     <div class="form-group">
+                        <input type="hidden" name="id" id="id" value="<?=$category['id']?>">
                         <label>Tên danh mục:</label>
-                        <input name="user_full" value="<?=$category['name']?>" required class="form-control" placeholder="">
+                        <input name="name" value="<?=$category['name']?>" class="form-control" placeholder="">
                     </div>
                     <button class="btn-update">Cập Nhật</button>
                 </form>

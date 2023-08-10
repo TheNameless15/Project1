@@ -38,18 +38,18 @@
                 </ul>
 
                 <ul class="header__navbar-list">
-                    <li class="header__navbar-item header__navbar-item--has-notification">
+                 <!--   <li class="header__navbar-item header__navbar-item--has-notification">
                         <i class="header__navbar-icon far fa-bell"></i>
-                        <a href="" class="header__navbar-item-link">Thông báo</a>
+                       <a href="" class="header__navbar-item-link">Thông báo</a>
 
-                    </li>
+                    </li>-->
                     <li class="header__navbar-item">
                         <!--<i class="header__navbar-icon fa-regular fa-circle-question"></i>-->
                         <a href="Guide.php" class="header__navbar-item-link"><i class="header__navbar-icon fa-regular fa-circle-question"></i>Trợ giúp</a>
                     </li>
                     <li class="header__navbar-item header_navbar-user">
                         <i class="fa-regular fa-user"></i>
-                        <span class="header_navbar-user-name"></span>
+                        <span class="header_navbar-user-name">Tài khoản</span>
                         <ul class="header__navbar-user-menu">
                            <!-- <li class="header__navbar-user-item">
                                 <a href="../../Admins/Customers/Index.php" id="<?php /*= '$id' */?>">Tài khoản của tôi</a>
@@ -79,9 +79,9 @@
     }
     ?>
             <div class="header-with-search">
-                <div class="header-logo">
+                <div class="header-logo" style="margin-right: 50px">
                     <a href="../Layout/Main.php" class="header_logo-link" ">
-                        <img src="../../Customer/assets/img/download.png" alt="Logo" class="header_logo-img"  style="width: 100% ; height: 65px">
+                        <img src="../../image/pngtree-education-book-logo-template-vector-illustration-design-png-image_5405269.png" alt="Logo" class="header_logo-img"  style="width: 100px ; height: 65px">
                     </a>
                 </div>
                 <div class="header_search" style="background: none">
@@ -96,7 +96,7 @@
                 </form>
                 </div>
                 <!-- CART -->
-                <a href="../cart/index.php"> <div class="header_cart">
+                <a href="../cart/index.php"> <div class="header_cart" style="margin-left: 40px">
                     <div class="header_cart-wrap">
                         <i class="header_cart-icon  fa-solid fa-cart-shopping"></i>
                         </div>

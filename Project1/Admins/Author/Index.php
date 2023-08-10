@@ -193,11 +193,11 @@ include_once '../Layout/Header.php';
                     <li class="icon-home">
                         <a href="" class="breadcrumb">
                             <i class="fa-solid fa-users" style="margin-right: 10px;"></i>
-                            Trang quản lí thành viên
+                            Trang quản lí tác giả
                         </a>
                     </li>
                 </ul>
-                <h1 class="page-header">Danh sách thành viên </h1>
+                <h1 class="page-header">Danh sách tác giả </h1>
 
                 <div class="list-member">
                     <div class="add-member">

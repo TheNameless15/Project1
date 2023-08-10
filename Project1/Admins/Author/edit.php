@@ -133,19 +133,20 @@ foreach ($authors AS $author){
                         </a>
                     </li>
                 </ul>
-                <h1 class="page-header">  Nhà xuất bản  </h1>
-                <?php  foreach ($authors AS $authors){
+                <h1 class="page-header">  Tác Giả  </h1>
+                <?php  foreach ($authors AS $author){
                     ?>
-                    <form method="post" action="update.php" role="form" >
+                    <form method="post" action="update.php" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="<?= $author['id']?>">
                         <div class="form-group">
                             <label>Tên tác giả</label>
-                            <input name="user_full" value="<?=$authors['name']?>" required class="form-control" placeholder="">
+                            <input type="text" name="name" value="<?=$author['name']?>" class="form-control" placeholder="">
                         </div>
                         <div class="form-group">
                             <label>Quê Quán</label>
-                            <input name="user_full" value="<?=$authors['country']?>" required class="form-control" placeholder="">
+                            <input type="text" name="country" value="<?=$author['country']?>" class="form-control" placeholder="">
                         </div>
-                        <button class="btn-update">Cập Nhật</button>
+                        <button>Cập Nhật</button>
                     </form>
                     <?php
                 }
