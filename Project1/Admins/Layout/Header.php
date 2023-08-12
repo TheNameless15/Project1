@@ -27,7 +27,7 @@ include_once "../../Connects/open.php";
 <header class="header">
     <!-- LOGO SHOP -->
     <div class="header-logo hide-on-tablet ">
-        <a href="#" class="header_logo-link">
+        <a href="../Layout/Manager.php" class="header_logo-link">
             <img src="../../Customer/assets/img/download.png"  alt="Logo" class="header_logo-img">
         </a>
     </div>

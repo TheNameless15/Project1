@@ -61,7 +61,7 @@ if(!isset($_SESSION['email'])){
                     </div>
                 </form>
                 <ul class="nav menu">
-                    <li class="active">
+                    <li >
                         <a href="../Layout/Manager.php">
                             <svg class="glyph stroked dashboard-dial">
                                 <use xlink:href="#stroked-dashboard-dial"></use>
@@ -70,7 +70,7 @@ if(!isset($_SESSION['email'])){
                             Dashboard
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="../Customers/Index.php">
                             <svg class="glyph stroked male user"> <!---->
                                 <use xlink:herf="#stroked-male-user"></use>

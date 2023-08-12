@@ -24,7 +24,7 @@ if(!isset($_SESSION['email'])){
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="../assets/fonts/fontawesome-free-6.4.0-web/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap"  rel="stylesheet">
-    <title>Add a author</title>
+    <title>Add a book</title>
     <style>
         .a{
             position: relative;

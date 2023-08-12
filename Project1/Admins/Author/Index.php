@@ -120,7 +120,7 @@ include_once '../Layout/Header.php';
                     </div>
                 </form>
                 <ul class="nav menu">
-                    <li class="active">
+                    <li >
                         <a href="../Layout/Manager.php">
                             <svg class="glyph stroked dashboard-dial">
                                 <use xlink:href="#stroked-dashboard-dial"></use>
@@ -175,7 +175,7 @@ include_once '../Layout/Header.php';
                         </a>
                     </li>
 
-                    <li>
+                    <li class="active">
                         <a href="../Author/Index.php">
                             <svg class="glyph stroked gear">
                                 <use xlink:herf="#stroked-gear"></use>

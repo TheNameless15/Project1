@@ -64,8 +64,8 @@ if(!isset($_SESSION['email'])){
                     </div>
                 </form>
                 <ul class="nav menu">
-                    <li class="active">
-                        <a href="Manager.php">
+                    <li>
+                        <a href="../Layout/Manager.php">
                             <svg class="glyph stroked dashboard-dial">
                                 <use xlink:href="#stroked-dashboard-dial"></use>
                             </svg>
@@ -106,10 +106,10 @@ if(!isset($_SESSION['email'])){
                                 <use xlink:herf="#stroked-two-massege"></use>
                             </svg>
                             <i class="fa-solid fa-comment" style="margin-right:8px"></i>
-                            Quản lí giỏ hàng
+                            Quản lí đơn hàng
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="../publishers/Index.php">
                             <svg class="glyph stroked chain">
                                 <use xlink:herf="#stroked-chain"></use>
@@ -124,7 +124,7 @@ if(!isset($_SESSION['email'])){
                             <svg class="glyph stroked gear">
                                 <use xlink:herf="#stroked-gear"></use>
                             </svg>
-                            <i class="fa-solid fa-gear" style="margin-right:8px"></i>
+                            <i class="fa-solid fa-pen-nib" style="margin-right:8px"></i>
                             Tác giả
                         </a>
                     </li>

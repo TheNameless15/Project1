@@ -44,12 +44,13 @@ $sqlSelectPublishers = "SELECT * FROM publishers";
 $publishers = mysqli_query($connect,$sqlSelectPublishers);
 $sqlSelectAuthors= "SELECT * FROM authors";
 $authors = mysqli_query($connect,$sqlSelectAuthors);
-$sql = "SELECT books.* , categories.name as cat_name , categories.id as cat_id  , publishers.id as pub_id  , publishers.name as pub_name , authors.name as au_name , authors.id as au_id FROM books inner join categories on books.category_id = categories.id inner join publishers on books.publisher_id = publishers.id inner join authors on books.author_id = authors.id  WHERE books.id = '$id'";
+$imgSource ='';
+$sql = "SELECT * FROM books WHERE id = '$id'";
 $books = mysqli_query($connect, $sql);
 include_once '../../Connects/close.php';
 foreach ($books AS $book){
     ?>
-<form method="post" action="update.php" enctype="multipart/form-data">
+
     <div class="grid">
         <div class="row sm-gutter ">
             <div class="col l-3">
@@ -137,6 +138,7 @@ foreach ($books AS $book){
                         </a>
                     </li>
                 </ul>
+                <form method="post" action="update.php" enctype="multipart/form-data">
                 <h1 class="page-header"><?=$book['name']?></h1>
                 <div class="row sm-gutter">
                     <div class="col l-6">
@@ -210,24 +212,34 @@ foreach ($books AS $book){
                             </select><br>-->
                     </div>
                     <div class="col l-6">
-                        <select name="category_id" class="form-control">
-                            <option><?= $book['cat_name'] ?></option>
+                        <select name="category_id" id="" class="form-control">
                             <?php
-                            foreach($categories as $category){
+                            foreach ($categories as $category) {
                                 ?>
-                                <option value="<?= $category['id'] ?>">
-                                    <?= $category['name']?>
-                                </option>
+                                <option value="<?= $category['id'] ?>"
+                                    <?php
+                                    if ($book['category_id'] == $category['id']) {
+                                        echo 'selected';
+                                    }
+                                    ?>
+                                >
+                                    <?= $category['name'] ?> </option>
                                 <?php
                             }
                             ?>
-                        </select><br>
+                        </select>
+                        <br>
                         <select name="publisher_id" class="form-control">
-                            <option><?= $book['pub_name'] ?></option>
                             <?php
                             foreach($publishers as $publisher){
                                 ?>
-                                <option value="<?= $publisher['id'] ?>">
+                                <option value="<?= $publisher['id'] ?>"
+                                    <?php
+                                    if ($book['publisher_id'] == $publisher['id']) {
+                                        echo 'selected';
+                                    }
+                                    ?>
+                                >
                                     <?= $publisher['name']?>
                                 </option>
                                 <?php
@@ -236,60 +248,36 @@ foreach ($books AS $book){
                         </select><br>
                         <div class="form-group">
                             <label>Ảnh sản phẩm</label>
-                            <input type="file" name="image">
+                            <input name="image" type="file" value="../images/<?= $book['image'] ?>"
+                                   accept="image/*"/>
                             <br>
+                            <?php
+                            $imgSource = $book['image'];
+                            ?>
                             <div>
-                                <img src="../../image/<?=$book['image']?>"  width="120px" height="150px">
+                                <img src="../../image/<?=$book['image']?>"  width="120px" height="150px" alt="">
                             </div>
                         </div>
                         <select name="author_id" class="form-control">
-                            <option><?= $book['au_name']?></option>
                             <?php
                             foreach($authors as $author){
                                 ?>
-                                <option value="<?= $author['id'] ?>">
+                                <option value="<?= $author['id'] ?>"
+                                <?php
+                                if ($book['category_id'] == $author['id']) {
+                                    echo 'SELECTED';
+                                }
+                                ?>
+                                >
                                     <?= $author['name']?>
                                 </option>
                                 <?php
                             }
                             ?>
                         </select><br>
-                       <!-- <div class="form-group">
-                            <label>Danh mục</label>
-                            <select name="cat_id" class="form-control">
-                                <option value="1">Lenovo</option>
-                                <option value="2">Acer</option>
-                                <option value="3">Dell</option>
-                                <option value="4">Asus</option>
-                                <option value="5">HP</option>
-                                <option value="6">Msi</option>
-                                <option value="7">Microsoft</option>
-                                <option value="8">Gygabyte</option>
-                                <option value="9">Samsung</option>
-                            </select>
-                        </div>-->
-                        <!--<div class="form-group">
-                            <label >Trạng thái</label>
-                            <select name="prd_status" class="form-control">
-                                <option value="1">Còn hàng</option>
-                                <option value="0">Hết hàng</option>
-                            </select>
-                        </div>-->
-                        <!--<div class="form-group">
-                            <label >Sản phẩm nổi bật</label>
-                            <div class="checkbox">
-                                <label>
-                                    <input name="prd_featured" type="checkbox" value="1">
-                                    Nổi bật
-                                </label>
-                            </div>
-                        </div>--><!--
-                        <div class="form-group">
-                            <label> Mô tả sản phẩm</label>
-                            <textarea name="prd_details" class="form-cotrol"  rows="3" style="width: 100%;height: 175px;font-size: 1.25rem" ><?php /*=$book['description']*/?></textarea>
-                        </div>-->
                             <button class="btn-default">Làm mới</button>
                     </form>
+
                     </div>
                 </div>
             </div>
@@ -302,4 +290,18 @@ foreach ($books AS $book){
 ?>
 </body>
 </html>
+<script>
+    // Get a reference to our file input
+    const fileInput = document.querySelector('input[type="file"]');
 
+    // Create a new File object
+    const myFile = new File(['strings'], '<?=$imgSource?>', {
+        type: 'text/plain',
+        lastModified: new Date(),
+    });
+
+    // Now let's create a DataTransfer to get a FileList
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(myFile);
+    fileInput.files = dataTransfer.files;
+</script>

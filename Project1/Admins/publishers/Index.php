@@ -114,7 +114,7 @@ include_once '../../Connects/close.php';
                     </div>
                 </form>
                 <ul class="nav menu">
-                    <li class="active">
+                    <li>
                         <a href="../Layout/Manager.php">
                             <svg class="glyph stroked dashboard-dial">
                                 <use xlink:href="#stroked-dashboard-dial"></use>
@@ -159,7 +159,7 @@ include_once '../../Connects/close.php';
                             Quản lí đơn hàng
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="../publishers/Index.php">
                             <svg class="glyph stroked chain">
                                 <use xlink:herf="#stroked-chain"></use>
