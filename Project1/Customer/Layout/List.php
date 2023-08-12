@@ -255,7 +255,7 @@ if (!isset($_SESSION['email'])){
                         ?>
                         <ul class="pagination  home-product__pagination">
                             <?php
-                            for($i = 1; $i < $countPage; $i++){
+                            for($i = 1; $i != $countPage; $i++){
                                 ?>
                                 <li class="pagination-item">
                                     <a href="?page=<?= $i ?>&search=<?= $search ?>" class="pagination-item__link">
