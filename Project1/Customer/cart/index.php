@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION['email'])){
+    header('Location: ../Account/Login.php');
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -22,7 +25,11 @@ session_start();
     <style>
     </style>
 </head>
+<?php
+include_once '../Layout/Header.php';?>
 <body>
+<div style="height: auto;width: 100%;display: flex;margin-bottom: 3%">
+    <div style="height: 100%;width: 100%">
 <!-- Do cái action update ở đây nên cái button sẽ thực thi cái hành động này -->
 <form method="post" action="update-cart.php">
     <table width="100%">
@@ -95,14 +102,19 @@ session_start();
             <td colspan="7">
                 <?php
                 if(!$count_money==0){
-                Echo 'Count: '. $count_money;
+                Echo 'Tổng đơn hàng: '. $count_money .'$';
                 //Hiển thị tổng tiền của các sp có trong cart
                 ?>
             </td>
         </tr>
         <tr>
-            <td colspan="7">
+            <td colspan="5">
                 <button class="btn btn-primary btn-md" style="background: #842029">UPDATE</button>
+            </td>
+            <td>
+                <a href="delete-all-product-in-cart.php" class="btn btn-primary btn-md" style="background: palegreen">
+                    <i class="fa-solid fa-cart-shopping"></i>Delete cart
+                </a>
             </td>
             <?php
             }
@@ -110,26 +122,63 @@ session_start();
         </tr>
     </table>
 </form>
-<a href="../Layout/Main.php" class="btn btn-warning btn-md" style="text-decoration: ">
-    <i class="fa fa-arrow-left" aria-hidden="true"> </i>&nbsp;Quay về trang chủ
-</a>
+    <div style="width: 100%;display: flex">
+        <div style="width: 50px;margin-right: 86%">
+            <a href="../Layout/Main.php" class="btn btn-primary btn-md" style="text-decoration: none;width: 200px">
+                <i class="fa fa-arrow-left" aria-hidden="true"> </i>&nbsp;Quay về trang chủ
+            </a>
+        </div>
 <?php if(!$count_money==0){
     ?>
-<a href="checkout.php" class="btn btn-primary btn-md">
-    <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Thanh toán</a>
-<a href="delete-all-product-in-cart.php" class="btn btn-primary btn-md" style="background: palegreen">
-    <i class="fa-solid fa-cart-shopping"></i>Delete cart
-</a>
+<!--<a href="checkout.php" class="btn btn-primary btn-md">
+    <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Thanh toán</a>-->
+    </div>
 <?php
 }
-
+if (!$count_money == 0){
+?>
+    </div>
+    <form action="order.php" method="post">
+    <div style="background: #fafafa;justify-content: space-around;align-content: space-around;flex-direction: column;width: 400px;height: 485px">
+        <div style="height: 45px;display: flex;justify-content: center;padding-top: 8px">
+            <span style="font-weight: bold">Điền thông tin người nhận</span>
+        </div>
+        <form action="order.php" method="post">
+       <!-- <div style="">
+            <label>Nguoi Nhan</label><br>
+            <input type="text" placeholder="Your Name" name="receiver_name" class="icon-left" style="">
+        </div>
+        <div style="">
+            <label>So Dien Thoai</label>
+            <input type="number" placeholder="Your phonenumber" name="receiver_phone" class="icon-left">
+        </div>
+        <div style="">
+            <label>Dia Chi</label><br>
+            <input type="tel" placeholder="Your Address" name="receiver_address" class="icon-left">
+        </div>-->
+            <div class="form-group">
+                <label for="exampleInputEmail1">Người nhận hàng</label>
+                <input type="text" style="height: 50px;font-size: 1.6rem" class="form-control" id="exampleInputEmail1" name="receiver_name" aria-describedby="emailHelp" placeholder="Nhập Tên">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Số điện thoại</label>
+                <input type="number" style="height: 50px;font-size: 1.6rem" class="form-control" name="receiver_phone" id="exampleInputPassword1" placeholder="Nhập số điện thoại">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Địa chỉ</label>
+                <input type="tel" style="height: 50px;font-size: 1.6rem" class="form-control" name="receiver_address" id="exampleInputPassword1" placeholder="Nhập địa chỉ">
+            </div>
+            <button class="btn btn-primary" style="margin: 125px 145px">Đặt hàng</button>
+        <!--Boostrap-->
+        </form>
+    </div>
+</div>
+<?php
+include_once '../Layout/Footer.php';
+}
 ?>
 <!-- End block content -->
 <!--Link xóa toàn bộ sản phẩm trên giỏ hàng-->
 <!--Link để quay về trang danh sách sản phẩm-->
 </body>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-
 </html>

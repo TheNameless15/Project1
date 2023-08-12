@@ -1,8 +1,5 @@
 <?php
-session_start();
-if (!isset($_SESSION['email'])){
-    header('Location: ../Account/Login.php');
-}
+session_start()
 ?>
 <!doctype html>
 <html lang="en">

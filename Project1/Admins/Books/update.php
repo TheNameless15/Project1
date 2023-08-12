@@ -13,11 +13,11 @@ $sql = "UPDATE books SET name = '$name',quantity ='$quantity',price ='$price',de
 mysqli_query($connect, $sql);
 mysqli_close($connect);
 //Kiểm tra ảnh đã tồn tại trong folder chưa
-if(!file_exists('../../image/' . $image)){
+if(!file_exists("../../images" . $image)){
     //Lấy path của ảnh
     $path = $_FILES['image']['tmp_name'];
     //Lưu ảnh
-    move_uploaded_file($path, '../../image/' . $image);
+    move_uploaded_file($path, '../../images' . $image);
 }
 //Quay về trang danh sách
 header('Location:index.php');

@@ -271,7 +271,7 @@ if(!isset($_SESSION['email'])){
                         </select><br>
                         <div class="form-group">
                             <label>Ảnh sản phẩm</label>
-                            <input type="file" required name="image" >
+                            <input type="file"  name="image" >
                             <br>
                         </div>
                         <select name="author_id" class="form-control">

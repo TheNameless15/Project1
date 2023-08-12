@@ -22,6 +22,7 @@
                         }
                     }
                     else{
+                        echo "Khách Hàng Ẩn";
                     }
                     ?>
                     </li><!-- Để xem gắn cái gì vào đây-->
@@ -47,6 +48,9 @@
                         <!--<i class="header__navbar-icon fa-regular fa-circle-question"></i>-->
                         <a href="Guide.php" class="header__navbar-item-link"><i class="header__navbar-icon fa-regular fa-circle-question"></i>Trợ giúp</a>
                     </li>
+                    <?php
+                    if (isset($_SESSION['email'])){
+                    ?>
                     <li class="header__navbar-item header_navbar-user">
                         <i class="fa-regular fa-user"></i>
                         <span class="header_navbar-user-name">Tài khoản</span>
@@ -63,6 +67,9 @@
                             <li class="header__navbar-user-item header__navbar-user-item--separate">
                                 <a href="../Account/Logout.php">Đăng xuất</a>
                             </li>
+                           <?php
+                            }
+                           ?>
                         </ul>
                     </li>
                 </ul>
@@ -95,13 +102,18 @@
                     </button>
                 </form>
                 </div>
-                <!-- CART -->
+                <!-- CART --> <?php
+                if (isset($_SESSION['email'])){
+                ?>
                 <a href="../cart/index.php"> <div class="header_cart" style="margin-left: 40px">
                     <div class="header_cart-wrap">
                         <i class="header_cart-icon  fa-solid fa-cart-shopping"></i>
                         </div>
                     </div>
                 </a>
+                <?php
+                }
+                ?>
                 </div>
             </div>
 

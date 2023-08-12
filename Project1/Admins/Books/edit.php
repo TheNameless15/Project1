@@ -236,10 +236,10 @@ foreach ($books AS $book){
                         </select><br>
                         <div class="form-group">
                             <label>Ảnh sản phẩm</label>
-                            <input type="file" name="image" onchange="chooseFile(this)" value="<?=$book['image']?>" accept="image/jpeg, image/gif, image/png">
+                            <input type="file" name="image">
                             <br>
                             <div>
-                                <img src="../../image/<?=$book['image']?>" alt="" id="prd-image" width="120px" height="150px">
+                                <img src="../../image/<?=$book['image']?>"  width="120px" height="150px">
                             </div>
                         </div>
                         <select name="author_id" class="form-control">

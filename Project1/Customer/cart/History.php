@@ -1,4 +1,6 @@
+<?php
 
+session_start()?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -27,14 +29,34 @@ if(isset($_SESSION['id'])){
 }
 // Không ngờ nó làm được thế này ảo vl
 // Có khi cần hỏi thầy về cái này chí mình vừa mới ấy bừa
-include_once '../Layout/Header.php';
 include_once '../../Connects/open.php';
 $sql = "SELECT * FROM orders where customer_id =  '$account' order by date_buy  desc";
 $orders = mysqli_query($connect,$sql);
-include_once '../../Connects/close.php';
 ?>
-<div style="height: 500px">
-    <table cellspacing="0" cellpadding="0" border="1">
+
+<div style="width: 100%;height: 100%"><!--App-->
+    <div style="width: 100%;height: 140px"><!--Header width=max, height 140-->
+        <?php
+        include_once '../Layout/Header.php';
+        ?>
+    </div>
+       <!--content--> <div style="height: 500px;width: 100%;display: flex;background:#e9ecef">
+        <div style="height: 500px;width: 20%;display: flex;flex-direction: column ;justify-content: space-around;align-items: center">
+            <div style="height: 35px">
+                <a href="../Layout/Main.php" style="text-decoration: none">
+                    <i class="fa-solid fa-house fa-lg"></i>
+                    <span style="color: #FFFFFF">Quay về trang chủ</span>
+                </a>
+            </div>
+            <div>
+                <a href="index.php" style="text-decoration: none">
+                    <i class="fa-solid fa-cart-shopping fa-lg"></i>
+                    <span style="color: #FFFFFF">Quay về giỏ hàng</span>
+                </a>
+            </div>
+        </div>
+        <div style="width: 80%">
+    <table cellspacing="0" cellpadding="0" border="1" style="height: 100%">
         <tr align="center">
             <th>STT</th>
             <th>Ngày mua</th>
@@ -44,27 +66,55 @@ include_once '../../Connects/close.php';
             <th>Xem chi tiết</th>
             <th>Hành động</th>
         </tr>
-        <?php foreach($orders as $order){?>
+                    <?php foreach($orders as $order){?>
             <tr>
                 <td><?= $order['id'] ?></td>
                 <td><?= $order['date_buy']?></td>
                 <td>
                     <?php
-                    if ($order['status'] == 0){echo "Pending";}
-                    else if ($order['status'] == 1){echo "Delivering";}
-                    else if ($order['status'] == 2){echo "Completed";}
-                    else if ($order['status'] == 3){echo "Canceled";}
+                    if ($order['status'] == 0){
+                    ?>
+                        <i class="fa-solid fa-spinner fa-2xl"></i>
+                        <span style="color: #0b74e5">Pending</span>
+                    <?php
+                    }
+                    else if ($order['status'] == 1){
+                        ?>
+                        <i class="fa-solid fa-truck fa-2xl"></i> <span style="color: #0b2e13">
+                            Delivering
+                        </span>
+                    <?php
+                    }
+                    else if ($order['status'] == 2){
+                        ?>
+                        <i class="fa-solid fa-check fa-2xl" style="color: darkgreen"></i>
+                        <span>Completed</span>
+                    <?php
+                    }
+                    else if ($order['status'] == 3){
+                        ?>
+                        <i class="fa-solid fa-x fa-2xl" style="color: red"></i>
+                        <span style="color: #842029">Canceled</span>
+                    <?php
+                    }
                     ?>
                 </td>
                 <td><a href="History_Order_Details.php?id=<?= $order['id']?>">Orders Details</a></td>
                 <td><a href="Cancel-orders.php?id=<?= $order['id']?>">Cancel orders</a></td>
             </tr>
-            <?php
-        }?>
-    </table>
+                <?php
+                    }?>
+        </table>
+        </div>
+    </div>
+    <div style="width: 100%;height:136px"><!--Footer-->
+        <?php
+        include_once '../Layout/Footer.php';
+        ?>
+    </div>
 </div>
 <?php
-include_once '../Layout/Footer.php';
+include_once '../../Connects/close.php';
 ?>
 </body>
 </html>
