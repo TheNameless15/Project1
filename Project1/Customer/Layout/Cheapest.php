@@ -118,7 +118,7 @@ if (!isset($_SESSION['email'])){
     ?>
 </head>
 <body>
-<div class="app__container">
+<div class="app__container" style="background: rgb(217,214,214)">
     <div class="grid">
         <div class="grid__row app__content">
             <div class="grid__column-2">
@@ -130,8 +130,8 @@ if (!isset($_SESSION['email'])){
                     <?php
                     foreach ($categories as $category){
                         ?>
-                        <ul class="category-list">
-                            <li class="category-item ">
+                        <ul class="category-list" >
+                            <li class="category-item">
                                 <a href="List.php?id=<?= $category['id']?>" class="category-item_link"> <?= $category['name']?> </a>
                             </li>
                             <!--Mỗi categories trong database nó sẽ tự hiện ra kết hợp với việc nó hiện đúng tên. Khi click vào nó sẽ truyền id cho List.php để hiện thị đúng sản phẩm thuộc danh mục đó-->
@@ -143,20 +143,20 @@ if (!isset($_SESSION['email'])){
             </div>
 
             <div class="grid__column-10" style="height: 600px">
-                <div class="home-filter">
+                <div class="home-filter" style="background: rgb(133,131,131)">
                     <span class="home-filter__label">Sắp xếp theo</span>
-                    <a class="home-filter__btn btn" href="Popular.php" style="text-decoration: none">Phổ biến</a>
-                    <a class="home-filter__btn btn btn-primary" href="Newest.php" style="background: none;text-decoration: none">Mới nhất</a>
-                    <a class="home-filter__btn btn" href="Best_Seller.php" style="text-decoration: none" >Bán chạy</a>
+                    <a class="home-filter__btn btn" href="Popular.php" style="text-decoration: none;background: rgb(255,255,255);color: rgb(16,13,13);font-weight: normal">Phổ biến</a>
+                    <a class="home-filter__btn btn btn-primary" href="Newest.php" style="background: rgb(255,255,255);text-decoration: none;color: rgb(16,13,13);font-weight: normal">Mới nhất</a>
+                    <a class="home-filter__btn btn" href="Best_Seller.php" style="text-decoration: none;background: rgb(255,255,255);color: rgb(16,13,13);font-weight: normal" >Bán chạy</a>
 
-                    <div class="select-input">
-                        <span class="select-input_label">Giá</span>
+                    <div class="select-input" style="background: #ffffff;">
+                        <span class="select-input_label" style="color:rgb(16,13,13);">- Giá thấp đến cao</span>
                         <i class="fa-solid fa-caret-down"></i>
 
                         <ul class="select-input__list">
-                            <li class="select-input__item">
+                           <!-- <li class="select-input__item">
                                 <a href="Cheapest.php" class="select-input__link">- Giá thấp đến cao</a>
-                            </li>
+                            </li>-->
                             <li class="select-input__item">
                                 <a href="Expensive.php" class="select-input__link">- Giá cao đến thấp</a>
                             </li>
@@ -171,44 +171,27 @@ if (!isset($_SESSION['email'])){
                         {
                             ?>
                             <div class="grid__column-2-4">
-                                <a href="Product-details.php?id=<?= $book['id'] ?>" class="home-product-item">
-                                    <div class="home-product-item__img " style="padding-top: 0%"> <img src="../../image/<?= $book['image']?>" style="width: 100% ;height:200px; "> </div>
-                                    <h4 class="home-product-item__name"> <?= $book['name']?></h4>
-                                    <div class="home-product-item__price">
-                                        <!--<span class="home-product-item__price-old"><?php /*= $book['price']*/?>$</span>-->
-                                        <span class="home-product-item__price-current" style="font-size: 2rem"><?= $book['price'] ?>$</span>
+                                <a href="Product-details.php?id=<?= $book['id'] ?>" class="home-product-item" style="background: rgba(255,255,255)">
+                                    <div class="home-product-item__img " style="padding-top: 0%">
+                                        <img src="../../image/<?= $book['image']?>" style="width: 100% ;height:200px; ">
+                                    </div>
+                                    <h4 class="home-product-item__name" style="color: black"> <?= $book['name']?></h4>
+                                    <div class="home-product-item__price" style="display: flex; justify-content: space-between">
+                                        <span class="home-product-item__brand" style="font-size: 1.1rem;color: rgb(0,0,0)"><?= $book['book_categories']?></span>
+                                        <span class="home-product-item__price-current" style="font-size: 1.5rem"><?= $book['price'] ?>đ</span>
                                     </div>
                                     <div class="home-product-item__action">
                                             <span class="home-product-item__like  home-product-item__like--liked">
                                                 <i class="home-product-item__like-icon-empty fa-regular fa-heart"></i>
-                                                <i class="home-product-item__like-icon-fill fa-solid fa-heart"></i>
-                                                <!-- <i class="fa-sharp fa-solid fa-heart"></i> -->
                                             </span>
-                                        <div class="home-product-item__rating">
-                                            <i class="home-product-item__start-gold fa-sharp fa-solid fa-star"></i>
-                                            <i class="home-product-item__start-gold fa-sharp fa-solid fa-star"></i>
-                                            <i class="home-product-item__start-gold fa-sharp fa-solid fa-star"></i>
-                                            <i class="home-product-item__start-gold fa-sharp fa-solid fa-star"></i>
-                                            <i class="home-product-item__start-gold fa-sharp fa-solid fa-star"></i>
-                                        </div>
-                                        <span class="home-product-item__sold">1 Đã bán</span>
                                     </div>
                                     <div class="home-product-item__origin">
-                                        <span class="home-product-item__brand"><?= $book['book_categories']?></span>
                                         <span class="home-product-item__origin-name"></span>
-                                    </div>
-                                    <div class="home-product-item__favourite">
-                                        <i class="fa-solid fa-check"></i>
-                                        <span> Yêu thích</span>
-                                    </div>
-                                    <div class="home-product-item__sale-off">
-                                        <span class="home-product-item__sale-off-percent">14%</span>
-                                        <span class="home-product-item__sale-off-label">GIẢM</span>
                                     </div>
                                 </a>
                                 <span class="addtocart" style="margin-top: 10px" >
                                     <div class="pretext">
-                                        <a href="../cart/add-to-cart.php?id=<?= $book['id']?>" style="text-decoration: none;">
+                                        <a href="../cart/add-to-cart.php?id=<?= $book['id']?>" style="text-decoration: none;color: white">
                                             <i class="fas fa-cart-plus"></i> ADD TO CART
                                     </div>
                                 </span>

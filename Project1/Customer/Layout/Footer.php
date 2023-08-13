@@ -17,7 +17,7 @@
 </head>
 <body>
 
-<footer class="footer">
+<footer class="footer" style="margin: 0 0">
     <div class="grid">
         <div class="grid__row" style="justify-content: space-between">
             <div class="grid__column-2-4">
