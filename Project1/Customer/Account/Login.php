@@ -38,7 +38,7 @@ if(isset($_SESSION['email'])){
             background-color: #d1f9ff;
             background-position: center;
             background-size: cover;
-            background-image: url("../../image/lovepik-books-in-the-sky-background-image_400062995.jpg");
+            background-image: url("../../image/b9074bb7f5173a2e04e8ee333c519fb0.jpg");
         }
         .form-box{
             position: relative;
@@ -151,12 +151,12 @@ if(isset($_SESSION['email'])){
                 <div class="inputbox">
                     <ion-icon name="mail-outline"></ion-icon>
                     <input type="email" required name="email">
-                    <label for="email">Email</label>
+                    <label for="email" style="transform: translateY(-110%)">Email</label>
                 </div>
                 <div class="inputbox">
                     <ion-icon name="lock-closed-outline"></ion-icon>
                     <input type="password" required name="password">
-                    <label for="password">Password</label>
+                    <label for="password" >Password</label>
                 </div>
                 <button>Login</button>
             </form>

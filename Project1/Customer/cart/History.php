@@ -9,7 +9,7 @@ session_start()?>
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" type= "text/css" href="../assets/css/base.css">
     <link rel="stylesheet" type= "text/css" href="../assets/css/main.css">
@@ -26,7 +26,7 @@ $account = $_GET['id'];
 //Xem xem có thiếu session lấy không. Tiện gắn $_Session[id] vào $ account luôn ?
 if(isset($_SESSION['id'])){
     $account = $_SESSION['id'];
-}
+
 // Không ngờ nó làm được thế này ảo vl
 // Có khi cần hỏi thầy về cái này chí mình vừa mới ấy bừa
 include_once '../../Connects/open.php';
@@ -40,8 +40,8 @@ $orders = mysqli_query($connect,$sql);
         include_once '../Layout/Header.php';
         ?>
     </div>
-       <!--content--> <div style="height: 500px;width: 100%;display: flex;background:#e9ecef">
-        <div style="height: 500px;width: 20%;display: flex;flex-direction: column ;justify-content: space-around;align-items: center">
+       <!--content--> <div style="height: 500px;width: 100%;display: flex;background:#a6a2a2">
+        <div style="height: 500px;width: 20%;background: #9a9898 ;display: flex;flex-direction: column ;justify-content: space-around;align-items: center">
             <div style="height: 35px">
                 <a href="../Layout/Main.php" style="text-decoration: none">
                     <i class="fa-solid fa-house fa-lg"></i>
@@ -56,19 +56,19 @@ $orders = mysqli_query($connect,$sql);
             </div>
         </div>
         <div style="width: 80%">
-    <table cellspacing="0" cellpadding="0" border="1" style="height: 100%">
-        <tr align="center">
+    <table cellspacing="0" cellpadding="0" border="1" style="height: auto">
+       <!-- <tr align="center">
             <th>STT</th>
             <th>Ngày mua</th>
             <th>Tình trạng</th>
-            <!-- <th>Đơn giá</th>
-             <th>Thành tiền</th>-->
+             <th>Đơn giá</th>
+             <th>Thành tiền</th>
             <th>Xem chi tiết</th>
             <th>Hành động</th>
-        </tr>
-                    <?php foreach($orders as $order){?>
+        </tr>-->
+                    <?php $SoHangMua=0; foreach($orders as $order){ $SoHangMua += 1;?>
             <tr>
-                <td><?= $order['id'] ?></td>
+                <td><?= $SoHangMua; ?></td>
                 <td><?= $order['date_buy']?></td>
                 <td>
                     <?php
@@ -78,29 +78,35 @@ $orders = mysqli_query($connect,$sql);
                         <span style="color: #0b74e5">Pending</span>
                     <?php
                     }
-                    else if ($order['status'] == 1){
+                    else if ($order['status'] == 2){
                         ?>
                         <i class="fa-solid fa-truck fa-2xl"></i> <span style="color: #0b2e13">
                             Delivering
                         </span>
                     <?php
                     }
-                    else if ($order['status'] == 2){
+                    else if ($order['status'] == 3){
                         ?>
                         <i class="fa-solid fa-check fa-2xl" style="color: darkgreen"></i>
                         <span>Completed</span>
                     <?php
                     }
-                    else if ($order['status'] == 3){
+                    else if ($order['status'] == 4){
                         ?>
                         <i class="fa-solid fa-x fa-2xl" style="color: red"></i>
                         <span style="color: #842029">Canceled</span>
                     <?php
                     }
+                    else if ($order['status'] == 1){
+                    ?>
+                        <i class="fa-solid fa-thumbs-up fa-2xl"></i>
+                        <span style="color:#4141f5">Approved</span>
+                    <?php
+                    }
                     ?>
                 </td>
-                <td><a href="History_Order_Details.php?id=<?= $order['id']?>">Orders Details</a></td>
-                <td><a href="Cancel-orders.php?id=<?= $order['id']?>">Cancel orders</a></td>
+                <td><a href="History_Order_Details.php?id=<?=$order['id']?>" style="text-decoration: none">Orders Details</a></td>
+                <td><a href="Cancel-orders.php?id=<?= $order['id']?>" style="text-decoration: none;">Cancel orders</a></td>
             </tr>
                 <?php
                     }?>
@@ -110,10 +116,14 @@ $orders = mysqli_query($connect,$sql);
     <div style="width: 100%;height:136px"><!--Footer-->
         <?php
         include_once '../Layout/Footer.php';
+        }
+else{
         ?>
     </div>
 </div>
 <?php
+    include_once '../Layout/Footer.php';
+}
 include_once '../../Connects/close.php';
 ?>
 </body>

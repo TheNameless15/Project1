@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $dataPoints = array(
     array("x"=> 10, "y"=> 41),
     array("x"=> 20, "y"=> 35, "indexLabel"=> "Lowest"),
@@ -28,9 +28,10 @@ while ($row = mysqli_fetch_array($order)){
         $count = $count+1;
     }
 }
-$sqlNewest = "SELECT distinct date_buy ,ROUND(SUM(price*quantity)) AS SumDoanhThu FROM orders inner join order_details on order_details.order_id = orders.id GROUP BY date_buy order by date_buy desc limit 1";
-$day = mysqli_query($connect,$sqlNewest);
+
 $today = date('y-m-d');
+$sqlNewest = "SELECT distinct date_buy ,ROUND(SUM(price*quantity)) AS SumDoanhThu FROM orders inner join order_details on order_details.order_id = orders.id WHERE (orders.date_buy = '$today' ) and ( orders.status = 2 )";
+$day = mysqli_query($connect,$sqlNewest);
 $last7days = date('y-m-d',time() - 7 * (60*60*24));
 $sqlWeeklyIncome = "SELECT MAX(date_buy), ROUND(SUM(price*quantity)) as SumDoanhThu From orders inner join order_details on order_details.order_id = orders.id WHERE (orders.date_buy between '$last7days' and '$today' ) and ( orders.status = 2 ) ";
 $WeeklyIncome = mysqli_query($connect,$sqlWeeklyIncome);
@@ -87,11 +88,11 @@ include_once '../../Connects/close.php';
     <div class="row sm-gutter ">
         <div class="col l-3">
             <div class="menu-right">
-                <form role="search">
+                <!--<form role="search">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
                     </div>
-                </form>
+                </form>-->
                 <ul class="nav menu">
                     <li >
                         <a href="../Layout/Manager.php">
@@ -163,22 +164,42 @@ include_once '../../Connects/close.php';
         <div class="col l-9">
             <div id="chartContainer" style="height: 370px; width: 100%;"></div>
             <div style="display: flex; justify-content: space-around">
-                <div style="width: 150px; height: 150px; background: #0b0b0b ; display: block; justify-content: center;align-items: center ">
-                    <h3 style="margin: 0px 20px">Doanh thu ngày hôm nay</h3>
+                <?php
+                foreach ($day as $item){ if($item['SumDoanhThu'] != 0){?>
+                <div style="width: 150px; height: 150px; background: #c9c9c9 ; display: block; justify-content: center;align-items: center ">
+                    <div style="margin: 0px 20px">
+                        <h3>Doanh thu ngày hôm nay</h3>
+                    </div>
                        <div style="margin: 25% 15%">
-                            <span style="margin: 0px 20px;font-weight: bold;font-size: 2.25rem;padding: 0px 0px">
+                            <span style="font-size: 2.25rem;font-weight: normal;">
                             <?php
-                            foreach ($day as $item){
-                                echo '+'.$item['SumDoanhThu'].'$';
-                            }
+                                echo '+'.$item['SumDoanhThu'].'đ';
                             ?>
                         </span>
                        </div>
+                    <?php }
+                    else if ($item['SumDoanhThu'] == 0){
+                    ?>
+                    <div style="width: 150px; height: 150px; background: #c9c9c9 ; display: block; justify-content: center;">
+                        <div style="margin: 0px 20px">
+                            <h3>Doanh thu ngày hôm nay</h3>
+                        </div>
+                        <div style="margin: 25% 15%">
+                            <span style="font-size: 1.5rem;font-weight: normal;">
+                            không bán được sản phẩm gì hôm nay
+                        </span>
+                        </div>
+                        <?php
+                        }
+                    }
+                ?>
                 </div>
-                <div style="width: 150px; height: 150px; /*margin: 0px 100px*/; background: #0b0b0b ; display: block; justify-content: center;align-items: center ">
-                    <h3 style="margin: 0px 20px">Doanh thu tong 7 ngay truoc </h3>
-                        <div style="margin: 35% 15%">
-                            <span style="margin: 0px 20px;font-weight: bold;font-size: 2.25rem;padding: 0px 0px">
+                <div style="width: 150px; height: 150px; background: #c9c9c9 ; display: block; justify-content: center;align-items: center ">
+                   <div style="margin: 0px 20px">
+                       <h3>Doanh thu tong 7 ngay truoc </h3>
+                   </div>
+                        <div style="margin: 25% 15%">
+                            <span style="font-size: 2.25rem;font-weight: normal">
                                 <?php
                                     foreach ($WeeklyIncome as $item) {
                                         echo '+'.$item['SumDoanhThu'].'$';

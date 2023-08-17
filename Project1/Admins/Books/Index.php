@@ -1,7 +1,7 @@
 <?php
 session_start();
-if(!isset($_SESSION['email'])){
-    header("Location:../home/login.php");
+if(!isset($_SESSION['email-ad'])){
+    header("Location:../Account/login.php");
 }
 ?>
 <!doctype html>
@@ -22,7 +22,7 @@ if(!isset($_SESSION['email'])){
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="../assets/fonts/fontawesome-free-6.4.0-web/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap"  rel="stylesheet">
-    <title>List's Customers</title>
+    <title>List Product</title>
 </head>
 <body>
 <?php
@@ -109,7 +109,7 @@ include_once '../../Connects/close.php';
             <div class="menu-right">
                 <form role="search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="Search" name="search" value="<?= $search; ?>">
                     </div>
                 </form>
                 <ul class="nav menu">
@@ -198,7 +198,7 @@ include_once '../../Connects/close.php';
                             <li>
                                 <a href="create.php" class="icon-and-addmember">
                                     <i class="fa-solid fa-plus"></i>
-                                    Thêm thành viên
+                                    Thêm sản phẩm
                                 </a>
                             </li>
                         </ul>

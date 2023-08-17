@@ -1,7 +1,8 @@
 <?php
 session_start();
 if(!isset($_SESSION['email'])){
-    header("Location:../home/login.php");
+    //Quay vá» trang login
+    header("Location:../Account/login.php");
 }
 ?>
 <!doctype html>
@@ -29,6 +30,7 @@ if(!isset($_SESSION['email'])){
 <?php
 $id = $_GET['id'];
 include_once '../../Connects/open.php';
+include_once '../Layout/Header.php';
 $sql = "SELECT * FROM publishers WHERE id = '$id'";
 $publishers = mysqli_query($connect, $sql);
 include_once '../../Connects/close.php';
@@ -46,11 +48,11 @@ include_once '../../Connects/close.php';
     <div class="row sm-gutter ">
         <div class="col l-3">
             <div class="menu-right">
-                <form role="search">
+                <!--<form role="search">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
                     </div>
-                </form>
+                </form>-->
                 <ul class="nav menu">
                     <li>
                         <a href="../Layout/Manager.php">

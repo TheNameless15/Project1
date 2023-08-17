@@ -1,8 +1,5 @@
 <?php
 session_start();
-if (!isset($_SESSION['email'])){
-    header('Location: ../Account/Login.php');
-}
 ?>
 <!doctype html>
 <html lang="en">
@@ -61,9 +58,7 @@ if (!isset($_SESSION['email'])){
     /* $books = mysqli_query($connect, $sql);*/
     //Đóng kết nối
     $id = $_GET['id'];
-    $sqlCategoriesBooks = "SELECT books.* , categories.name as book_categories , categories.id  from books inner join categories on books.category_id = categories.id WHERE books.name LIKE '%$search%' LIMIT $start, $recordOnePage";
-    $find = mysqli_query($connect,$sqlCategoriesBooks);
-    $sql = "SELECT books.* , categories.name as book_categories , categories.id  from books inner join categories on books.category_id = categories.id where categories.id = '$id' ";
+    $sql = "SELECT books.* FROM books WHERE (category_id = '$id') OR (books.name LIKE '$search')";
     $books = mysqli_query($connect,$sql);
     $sqlCategories = "SELECT * FROM categories";
     $categories = mysqli_query($connect,$sqlCategories);
@@ -130,9 +125,9 @@ if (!isset($_SESSION['email'])){
 <body>
 <div class="app__container" style="background: rgb(217,214,214)">
     <div class="grid">
-        <div class="grid__row app__content">
+        <div class="grid__row app__content" style="margin-bottom: 50px">
             <div class="grid__column-2">
-                <nav class="category">
+                <nav class="category" style="background: rgb(150,146,146)">
                     <h3 class="category_heading">
                         <i class="category_heading-icon fa-solid fa-list"></i>
                         Danh mục
@@ -169,7 +164,7 @@ if (!isset($_SESSION['email'])){
                     <?php
                     foreach ($categories as $category){
                         ?>
-                        <ul class="category-list">
+                        <ul class="category-list" style="display: flex;justify-content: center">
                             <li class="category-item ">
                                 <a href="List.php?id=<?= $category['id']?>" class="category-item_link"> <?= $category['name']?> </a>
                             </li>
@@ -213,8 +208,8 @@ if (!isset($_SESSION['email'])){
                                     </div>
                                     <h4 class="home-product-item__name" style="color: black"> <?= $book['name']?></h4>
                                     <div class="home-product-item__price" style="display: flex; justify-content: space-between">
-                                        <span class="home-product-item__brand" style="font-size: 1.1rem;color: rgb(0,0,0)"><?= $book['book_categories']?></span>
-                                        <span class="home-product-item__price-current" style="font-size: 1.5rem"><?= $book['price'] ?>đ</span>
+                                        <span class="home-product-item__brand" style="font-size: 1.1rem;color: rgb(0,0,0)"><?php foreach ($categories as $category){ if ($book['category_id']== $category['id']){echo $category['name'];}}?></span>
+                                        <span class="home-product-item__price-current" style="font-size: 1.5rem"><?= number_format($book['price'],0,',',',') ?>đ</span>
                                     </div>
                                     <div class="home-product-item__action">
                                             <span class="home-product-item__like  home-product-item__like--liked">

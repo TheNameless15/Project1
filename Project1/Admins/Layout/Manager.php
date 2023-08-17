@@ -1,6 +1,11 @@
+<?php
+session_start();
+if(!isset($_SESSION['email-ad'])){
+    header("Location:../Account/Login.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,11 +48,11 @@ include_once '../../Connects/close.php';
     <div class="row sm-gutter ">
         <div class="col l-3">
             <div class="menu-right">
-                <form role="search">
+               <!-- <form role="search">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
                     </div>
-                </form>
+                </form>-->
                 <ul class="nav menu">
                     <li class="active">
                         <a href="Manager.php">

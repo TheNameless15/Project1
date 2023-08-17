@@ -1,7 +1,7 @@
 <?php
 session_start();
-if(!isset($_SESSION['email'])){
-    header("Location:../home/login.php");
+if(!isset($_SESSION['email-ad'])){
+    header("Location:../Account/login.php");
 }
 ?>
 <!doctype html>
@@ -118,7 +118,7 @@ include_once '../Layout/Header.php';
             <div class="menu-right">
                 <form role="search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="Search" name="search" value="<?= $search; ?>">
                     </div>
                 </form>
                 <ul class="nav menu">

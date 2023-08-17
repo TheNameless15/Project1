@@ -1,7 +1,8 @@
 <?php
 session_start();
 if(!isset($_SESSION['email'])){
-    header("Location:../home/login.php");
+    //Quay vá» trang login
+    header("Location:../Account/login.php");
 }
 ?>
 <!doctype html>
@@ -27,6 +28,7 @@ if(!isset($_SESSION['email'])){
 <?php
 $id = $_GET['id'];
 include_once '../../Connects/open.php';
+include_once '../Layout/Header.php';
 $sql = "SELECT * FROM customer WHERE id = '$id'";
 $customers = mysqli_query($connect, $sql);
 include_once '../../Connects/close.php';
@@ -56,11 +58,11 @@ include_once '../../Connects/close.php';
     <div class="row sm-gutter ">
         <div class="col l-3">
             <div class="menu-right">
-                <form role="search">
+                <!--<form role="search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="Search" name="search" value="<?php /*= $search; */?>">
                     </div>
-                </form>
+                </form>-->
                 <ul class="nav menu">
                     <li >
                         <a href="../Layout/Manager.php">
@@ -154,7 +156,7 @@ include_once '../../Connects/close.php';
                         </div>
                         <div class="form-group">
                             <label>Mật khẩu</label>
-                            <input name="password" value="<?=md5($customer['password'])?>" required class="form-control" placeholder="m5">
+                            <input name="password" value="<?=$customer['password']?>" required class="form-control" placeholder="m5">
                         </div>
                         <div class="form-group">
                             <label>Số điện thoại</label>
@@ -162,7 +164,38 @@ include_once '../../Connects/close.php';
                         </div>
                         <div class="form-group">
                             <label>Giới tính</label>
-                            <input name="gender" value="<?=$customer['gender']?>" required class="form-control" placeholder="">
+                            <!--<input name="gender" type="radio" value="<?php /*=$customer['gender']*/?>" required class="form-control" placeholder="">
+                            <input class="form-control" type="radio" name="gender" value="<?php /*if($customer['gender'] == 0 ){ echo 'Nu';}*/?>" required
+                                <?php
+/*                                if ($customer['gender'] == 0) {
+                                    echo "checked";
+                                }
+                                */?>>
+                            Nữ
+                            <input class="form-control" type="radio" name="gender" value="<?php /*if($customer['gender'] == 1 ){ echo 'Nam';}*/?>" required
+                                <?php
+/*                                if ($customer['gender'] == 1) {
+                                    echo "checked";
+                                }
+                                */?>>
+                            Nam-->
+                                <select name="gender" required class="form-control">
+                                    <option><?php if ($customer['gender'] == 0){ echo 'Nữ';} else{ echo 'Nam'; }?></option>
+                                    <?php
+                                    if ($customer['gender'] == 0){
+                                        ?>
+                                        <option value="1">Nam</option>
+                                    <?php
+                                    }
+                                    ?>
+                                    <?php
+                                    if ($customer['gender'] == 1){
+                                        ?>
+                                        <option value="0">Nữ</option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
                         </div>
                         <div class="form-group">
                             <label>Địa chỉ</label>

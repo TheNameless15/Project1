@@ -29,8 +29,7 @@ if(isset($_SESSION['email'])){
             background-color: black;
             background-position: center;
             background-size: cover;
-            background-image: url("../../image/lovepik-books-in-the-sky-background-image_400062995.jpg");
-
+            background-image: url("../../image/b9074bb7f5173a2e04e8ee333c519fb0.jpg");
         }
         .form-box{
             position: relative;
@@ -142,7 +141,7 @@ if(isset($_SESSION['email'])){
             <form method="post" action="registerProcess.php">
                 <h2>Đăng Ký</h2>
                 <div class="inputbox">
-                    <input type="text" name="name">
+                    <input type="text" name="name" required>
                     <label for="name">Họ và tên</label>
                 </div>
                 <div class="inputbox">
@@ -156,16 +155,16 @@ if(isset($_SESSION['email'])){
                     <label for="password">Password</label>
                 </div>
                 <div class="inputbox">
-                    <input type="number" name="phone">
+                    <input type="number" required name="phone">
                     <label for="phone">Phone number</label>
                 </div>
                 <div >
                     <label for="gender" style="padding-bottom:45px">Giới tính</label>
-                    <input type="radio" name="gender" value="0"> Female
-                    <input type="radio" name="gender" value="1"> Male <br>
+                    <input type="radio" name="gender" required value="0"> Female
+                    <input type="radio" name="gender"  required value="1"> Male <br>
                 </div>
                 <div class="inputbox">
-                    <input type="text" name="address">
+                    <input type="text" required name="address">
                     <label for="address">Địa chỉ</label>
                 </div>
                 <button style="margin-top: 50px">Đăng ký</button>

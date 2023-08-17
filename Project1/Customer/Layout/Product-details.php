@@ -11,17 +11,21 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="../../../Project_tantai3/assets/css/base.css">
-    <link rel="stylesheet" href="../../../Project_tantai3/assets/css/main.css">
-    <link rel="stylesheet" href="../../../Project_tantai3/assets/css/grid.css">
-    <link rel="stylesheet" href="../../../Project_tantai3/assets/css/responsive.css">
-    <link rel="stylesheet" href="../../../Project_tantai3/assets/css/product.css">
-
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/grid.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/product.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="../../../Project_tantai3/assets/fonts/fontawesome-free-6.4.0-web/css/all.min.css">
+    <link rel="stylesheet" href="../assets/fonts/fontawesome-free-6.4.0-web/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     <meta name="robots" content="noindex,follow" />
+    <style>
+        *{
+            color: black;
+        }
+    </style>
 </head>
 <body>
 
@@ -29,14 +33,21 @@
 //Lấy id của sp
 $id = $_GET['id'];
 //Mở kết nối
+session_start();
+include_once '../Layout/Header.php';
 include_once '../../Connects/open.php';
 //Viết query
-$sql = "SELECT books.*, publishers.id , publishers.name as pub_name , categories.id , categories.name as cat_name, authors.id , authors.name as au_name FROM books inner join publishers on books.publisher_id = publishers.id inner join categories on books.category_id = categories.id inner join authors on books.author_id = authors.id  WHERE books.id = '$id'";
+$sql = "SELECT * FROM books WHERE id = '$id'";
 //Chạy query
 $books = mysqli_query($connect, $sql);
 //Đóng kết nối
+$sqlPublisher = "SELECT * FROM publishers";
+$sqlCategories = "SELECT * FROM categories";
+$sqlAuthors = "SELECT * FROM authors";
+$au = mysqli_query($connect,$sqlAuthors);
+$pub = mysqli_query($connect,$sqlPublisher);
+$cat = mysqli_query($connect,$sqlCategories);
 include_once '../../Connects/close.php';
-include_once '../Layout/Header.php';
 ?>
     <?php
     foreach ($books as $book){
@@ -54,7 +65,7 @@ include_once '../Layout/Header.php';
                 <div class="col l-5">
                     <a class="product_left">
                         <div class="product-img">
-                            <img src="../../image/<?= $book['image']?>" alt="" class="product-img-sp1">
+                            <img src="../../image/<?= $book['image']?>" alt="" class="product-img-sp1" style="height: 670px">
                             <!-- <div class="product_icons-directional">
                               <i class="product_icon-left fa-solid fa-angle-left"></i>
                               <i class="product_icon-right fa-solid fa-angle-right"></i>
@@ -102,19 +113,20 @@ include_once '../Layout/Header.php';
                           <!--      <div class="product-summary-item-title">Thông số sản phẩm này</div>-->
                                 <ul class="product-summary-item-ul flex-wrap" id="">
                                     <li>
-                                      <h5>Thông tin mô tả: <br> <?= $book['description']?> </h5>
+                                      <h5 style="font-weight: bold">Thông tin mô tả: <br> <?= $book['description']?> </h5>
                                     </li>
                                     <li>
                                         <br>
-                                        <h5>Tên tác giả: <?= $book['au_name']?> </h5>
+                                        <h5>Tên tác giả: <?php foreach($au as $a){ if($a['id'] == $book['author_id']){ echo $a['name'];}}?> </h5>
                                     </li>
                                     <li>
                                         <br>
-                                        <h5>Thể loại sách: <?= $book['cat_name']?> </h5>
+                                        <h5>Thể loại sách:<?php foreach($cat as $ca){ if($ca['id'] == $book['category_id']){ echo $ca['name'];}}?></h5>
+
                                     </li>
                                     <li>
                                         <br>
-                                       <h5>Nhà xuất bản:  <?= $book['pub_name']?></h5>
+                                       <h5>Nhà xuất bản:  <?php foreach($pub as $pu){ if($pu['id'] == $book['publisher_id']){ echo $pu['name'];}}?></h5>
                                     </li>
                                 </ul>
                             </div>
@@ -124,13 +136,13 @@ include_once '../Layout/Header.php';
                                 <div class="price_new">
                                     <p style="font-size: 14px;">Giá ưu đãi đặc biệt:</p>
                                     <strong class="price_promotion" id="js-pd-price" data-price="1750000">
-                                        <?= $book['price']?>$
+                                        <?= number_format($book['price'],0,',',',');?>đ
                                     </strong>
                                     <strong class="price_promotion" id="js-pd-price" data-price="1750000"></strong>
                                 </div>
-                                <div class="product_summary-item ribbons">
+                                <!--<div class="product_summary-item ribbons">
                                     <div class="yellow-ribbon">Không có bảo hành</div>
-                                </div>
+                                </div>-->
                             </div>
                             <div class="box-number-quan-detail">
                             <!--    <span class="number-product-want-buy">Số lượng:</span>-->

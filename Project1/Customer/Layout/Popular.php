@@ -1,8 +1,5 @@
 <?php
 session_start();
-if (!isset($_SESSION['email'])){
-    header('Location: ../Account/Login.php');
-}
 ?>
 <!doctype html>
 <html lang="en">
@@ -110,11 +107,14 @@ if (!isset($_SESSION['email'])){
     //Tính bản ghi bắt đầu của trang
     include_once 'Header.php';
     $start = ($page - 1) * $recordOnePage;
-    $sqlCategoriesBooks = "SELECT books.* , categories.name as book_categories , categories.id  from books inner join categories on books.category_id = categories.id WHERE books.name LIKE '%$search%' LIMIT $start, $recordOnePage";
-    $books = mysqli_query($connect,$sqlCategoriesBooks);
-    $sqlPopularity = "SELECT books.*, categories.id as catego_id , categories.name as cat_name , COUNT(book_id) FROM books INNER JOIN categories ON books.category_id = categories.id INNER JOIN order_details ON books.id = order_details.book_id  GROUP BY books.id ORDER BY COUNT(book_id) desc LIMIT $start, $recordOnePage";
-    $popularity = mysqli_query($connect,$sqlPopularity);
+    $sql = "SELECT books.*, COUNT(book_id) FROM books INNER JOIN order_details ON books.id = order_details.book_id 
+            INNER JOIN publishers ON publishers.id = books.publisher_id 
+            INNER JOIN categories ON categories.id = books.category_id 
+            INNER JOIN authors ON authors.id = books.author_id  WHERE (books.name LIKE '%$search%') OR 
+            (publishers.name LIKE '%$search%') OR (categories.name LIKE '$search') OR (authors.name LIKE '$search') 
+            GROUP BY books.id ORDER BY COUNT(book_id) desc LIMIT $start, $recordOnePage";
     $sqlCategories = "SELECT * FROM categories";
+    $books = mysqli_query($connect,$sql);
     $categories = mysqli_query($connect,$sqlCategories);
     include_once '../../Connects/close.php';
     ?>
@@ -124,7 +124,7 @@ if (!isset($_SESSION['email'])){
     <div class="grid">
         <div class="grid__row app__content">
             <div class="grid__column-2">
-                <nav class="category">
+                <nav class="category" style="background: rgb(150,146,146)">
                     <h3 class="category_heading">
                         <i class="category_heading-icon fa-solid fa-list"></i>
                         Danh mục
@@ -132,7 +132,7 @@ if (!isset($_SESSION['email'])){
                     <?php
                     foreach ($categories as $category){
                         ?>
-                        <ul class="category-list">
+                        <ul class="category-list" style="display: flex;justify-content: center">
                             <li class="category-item ">
                                 <a href="List.php?id=<?= $category['id']?>" class="category-item_link"> <?= $category['name']?> </a>
                             </li>
@@ -179,8 +179,8 @@ if (!isset($_SESSION['email'])){
                                     </div>
                                     <h4 class="home-product-item__name" style="color: black"> <?= $book['name']?></h4>
                                     <div class="home-product-item__price" style="display: flex; justify-content: space-between">
-                                        <span class="home-product-item__brand" style="font-size: 1.1rem;color: rgb(0,0,0)"><?= $book['book_categories']?></span>
-                                        <span class="home-product-item__price-current" style="font-size: 1.5rem"><?= $book['price'] ?>đ</span>
+                                        <span class="home-product-item__brand" style="font-size: 1.1rem;color: rgb(0,0,0)"><?php foreach ($categories as $category){ if ($book['category_id']== $category['id']){echo $category['name'];}}?></span>
+                                        <span class="home-product-item__price-current" style="font-size: 1.5rem"><?= number_format($book['price'],0,',',',') ?>đ</span>
                                     </div>
                                     <div class="home-product-item__action">
                                             <span class="home-product-item__like  home-product-item__like--liked">

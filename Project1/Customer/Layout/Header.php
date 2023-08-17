@@ -1,6 +1,6 @@
 
 <div class="app" xmlns="http://www.w3.org/1999/html">
-    <header class="header">
+    <header class="header" style="background-image: none;background: black">
         <div class="grid">
             <nav class="header__navbar">
                 <ul class="header__navbar-list">
@@ -46,13 +46,14 @@
                     </li>-->
                     <li class="header__navbar-item">
                         <!--<i class="header__navbar-icon fa-regular fa-circle-question"></i>-->
-                        <a href="Guide.php" class="header__navbar-item-link"><i class="header__navbar-icon fa-regular fa-circle-question"></i>Trợ giúp</a>
+                        <a href="../Layout/Guide.php" class="header__navbar-item-link"><i class="header__navbar-icon fa-regular fa-circle-question"></i>Trợ giúp</a>
                     </li>
                     <?php
+
                     if (isset($_SESSION['email'])){
                     ?>
                     <li class="header__navbar-item header_navbar-user">
-                        <i class="fa-regular fa-user"></i>
+                        <i class="fa-solid fa-user fa-beat"></i>
                         <span class="header_navbar-user-name">Tài khoản</span>
                         <ul class="header__navbar-user-menu">
                            <!-- <li class="header__navbar-user-item">
@@ -69,7 +70,12 @@
                             </li>
                            <?php
                             }
+                    else {
                            ?>
+                        <a href="../Account/Login.php" class="header__navbar-item header__navbar-user-item--separate"><i class="fa-solid fa-user fa-beat"></i>Đăng nhập</a>
+                            <?php
+                    }
+                            ?>
                         </ul>
                     </li>
                 </ul>
@@ -88,7 +94,7 @@
             <div class="header-with-search">
                 <div class="header-logo" style="margin-right: 50px">
                     <a href="../Layout/Main.php" class="header_logo-link" ">
-                        <img src="../../image/pngtree-education-book-logo-template-vector-illustration-design-png-image_5405269.png" alt="Logo" class="header_logo-img"  style="width: 100px ; height: 65px">
+                        <img src="../../image/b9074bb7f5173a2e04e8ee333c519fb0.jpg" alt="Logo" class="header_logo-img"  style="width: 100px ; height: 65px">
                     </a>
                 </div>
                 <div class="header_search" style="background: none">

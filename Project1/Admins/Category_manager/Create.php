@@ -1,7 +1,8 @@
 <?php
 session_start();
 if(!isset($_SESSION['email'])){
-    header("Location:../home/login.php");
+    //Quay vá» trang login
+    header("Location:../Account/login.php");
 }
 ?>
 <!doctype html>
@@ -47,6 +48,7 @@ if(!isset($_SESSION['email'])){
     //Má»Ÿ káº¿t ná»‘i
     include_once '../../Connects/open.php';
     //Query
+    include_once '../Layout/Header.php';
     $sql = "SELECT * FROM categories";
     //Cháº¡y query
     $categories = mysqli_query($connect, $sql);
@@ -67,11 +69,11 @@ if(!isset($_SESSION['email'])){
     <div class="row sm-gutter ">
         <div class="col l-3">
             <div class="menu-right">
-                <form role="search">
+                <!--<form role="search">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
                     </div>
-                </form>
+                </form>-->
                 <ul class="nav menu">
                     <li>
                         <a href="../Layout/Manager.php">

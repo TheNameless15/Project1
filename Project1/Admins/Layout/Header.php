@@ -1,3 +1,8 @@
+<?php
+if(!isset($_SESSION['email-ad'])){
+    header("Location:../Account/login.php");
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -28,7 +33,7 @@ include_once "../../Connects/open.php";
     <!-- LOGO SHOP -->
     <div class="header-logo hide-on-tablet ">
         <a href="../Layout/Manager.php" class="header_logo-link">
-            <img src="../../Customer/assets/img/download.png"  alt="Logo" class="header_logo-img">
+            <img src="../../image/b9074bb7f5173a2e04e8ee333c519fb0.jpg"  alt="Logo" class="header_logo-img" style="margin-bottom: 0px">
         </a>
     </div>
     <div class="icon-login-logout">

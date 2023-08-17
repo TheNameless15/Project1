@@ -1,5 +1,5 @@
 <?php
-session_start()
+session_start();
 ?>
 <!doctype html>
 <html lang="en">
@@ -107,8 +107,12 @@ session_start()
     //Tính bản ghi bắt đầu của trang
     include_once 'Header.php';
     $start = ($page - 1) * $recordOnePage;
-    $sqlCategoriesBooks = "SELECT books.* , categories.name as book_categories , categories.id  from books inner join categories on books.category_id = categories.id WHERE books.name LIKE '%$search%' LIMIT $start, $recordOnePage";
-    $books = mysqli_query($connect,$sqlCategoriesBooks);
+    $sql = "SELECT books.* FROM books INNER JOIN publishers ON publishers.id = books.publisher_id 
+            INNER JOIN categories ON categories.id = books.category_id INNER JOIN authors ON
+            authors.id = books.author_id WHERE (books.name LIKE '%$search%') OR 
+            (publishers.name LIKE '%$search%') OR (categories.name LIKE '$search') OR (authors.name LIKE '$search') 
+            LIMIT $start, $recordOnePage";
+    $books = mysqli_query($connect,$sql);
     $sqlCategories = "SELECT * FROM categories";
     $categories = mysqli_query($connect,$sqlCategories);
     include_once '../../Connects/close.php';
@@ -117,18 +121,18 @@ session_start()
 <body>
 <div class="app__container" style="background: rgb(217,214,214)">
     <div class="grid">
-        <div class="grid__row app__content">
+        <div class="grid__row app__content" style="padding-bottom: 50px">
             <div class="grid__column-2">
-                <nav class="category">
-                    <h3 class="category_heading">
+                <nav class="category" style="background: rgb(150,146,146)">
+                    <h3 class="category_heading" >
                         <i class="category_heading-icon fa-solid fa-list"></i>
                         Danh mục
                     </h3>
                     <?php
                     foreach ($categories as $category){
                         ?>
-                        <ul class="category-list">
-                            <li class="category-item ">
+                        <ul class="category-list" style="display: flex;justify-content: center">
+                            <li class="category-item">
                                 <a href="List.php?id=<?= $category['id']?>" class="category-item_link"> <?= $category['name']?> </a>
                             </li>
                             <!--Mỗi categories trong database nó sẽ tự hiện ra kết hợp với việc nó hiện đúng tên. Khi click vào nó sẽ truyền id cho List.php để hiện thị đúng sản phẩm thuộc danh mục đó-->
@@ -164,7 +168,8 @@ session_start()
                     <div class="grid__row">
                         <!-- Grid->Row->Column -->
                         <!-- Product item -->
-                        <?php foreach ($books as $book)
+                        <?php
+                        foreach ($books as $book)
                         {
                             ?>
                             <div class="grid__column-2-4">
@@ -174,8 +179,8 @@ session_start()
                                     </div>
                                     <h4 class="home-product-item__name" style="color: black"> <?= $book['name']?></h4>
                                     <div class="home-product-item__price" style="display: flex; justify-content: space-between">
-                                        <span class="home-product-item__brand" style="font-size: 1.1rem;color: rgb(0,0,0)"><?= $book['book_categories']?></span>
-                                        <span class="home-product-item__price-current" style="font-size: 1.5rem"><?= $book['price'] ?>đ</span>
+                                        <span class="home-product-item__brand" style="font-size: 1.1rem;color: rgb(0,0,0)"><?php foreach ($categories as $category){ if ($book['category_id']== $category['id']){echo $category['name'];}}?></span>
+                                        <span class="home-product-item__price-current" style="font-size: 1.5rem"><?= number_format($book['price'],0,'.','.') ?>đ</span>
                                     </div>
                                     <div class="home-product-item__action">
                                             <span class="home-product-item__like  home-product-item__like--liked">
@@ -185,6 +190,14 @@ session_start()
                                     <div class="home-product-item__origin">
                                         <span class="home-product-item__origin-name"></span>
                                     </div>
+                                 <!--   <div class="home-product-item__favourite">
+                                        <i class="fa-solid fa-check"></i>
+                                        <span> Yêu thích</span>
+                                    </div>-->
+                                 <!--   <div class="home-product-item__sale-off">
+                                        <span class="home-product-item__sale-off-percent">14%</span>
+                                        <span class="home-product-item__sale-off-label">GIẢM</span>
+                                    </div>-->
                                 </a>
                                 <span class="addtocart" style="margin-top: 10px" >
                                     <div class="pretext">

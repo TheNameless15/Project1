@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -51,7 +52,7 @@ if(isset($_GET['page'])){
 }
 //Tính bản ghi bắt đầu của trang
 $start = ($page - 1) * $recordOnePage;
-$sql = " SELECT orders.*, customer.name as cus_name, customer.id as cus_id from orders inner join customer on customer.id = orders.customer_id  WHERE orders.date_buy LIKE '%$search%' order by orders.id desc LIMIT $start, $recordOnePage";
+$sql = " SELECT orders.*, customer.name as cus_name, customer.id as cus_id from orders inner join customer on customer.id = orders.customer_id  WHERE (orders.date_buy LIKE '%$search%') OR (customer.name LIKE '$search') order by orders.id desc LIMIT $start, $recordOnePage";
 $orders = mysqli_query($connect, $sql);
 include_once '../../Connects/close.php';
 ?>
@@ -106,7 +107,7 @@ include_once '../../Connects/close.php';
                 <div class="menu-right">
                     <form role="search">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
+                            <input type="text" class="form-control" placeholder="search" name="search" value="<?= $search; ?>">
                         </div>
                     </form>
                     <ul class="nav menu">
@@ -239,14 +240,17 @@ include_once '../../Connects/close.php';
                                             if ($order['status'] == 0){
                                                 echo "Pending";
                                             }
-                                            elseif ($order['status'] == 1 ){
+                                            elseif ($order['status'] == 2 ){
                                                 echo "Delivering";
                                             }
-                                            elseif ($order['status'] == 2 ){
+                                            elseif ($order['status'] == 3 ){
                                                 echo "Completed";
                                             }
-                                            elseif ($order['status'] == 3 ){
+                                            elseif ($order['status'] == 4 ){
                                                 echo "Canceled";
+                                            }
+                                            elseif ($order['status'] == 1 ){
+                                                echo "Approved";
                                             }
                                             ?>
                                         </td>

@@ -1,10 +1,4 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <link rel="stylesheet" type= "text/css" href="../assets/css/base.css">
     <link rel="stylesheet" type= "text/css" href="../assets/css/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,10 +7,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap">
     <link href="../assets/js/main.js" rel="stylesheet" >
-    <title>Document</title>
-</head>
-<body>
-
 <footer class="footer" style="margin: 0 0">
     <div class="grid">
         <div class="grid__row" style="justify-content: space-between">

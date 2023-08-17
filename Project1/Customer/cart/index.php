@@ -26,7 +26,16 @@ if (!isset($_SESSION['email'])){
     </style>
 </head>
 <?php
-include_once '../Layout/Header.php';?>
+//Mở kết nối
+include_once '../../Connects/open.php';
+$count_money = 0;
+include_once '../Layout/Header.php';
+//Trong trường hợp chưa có cart ở trên session
+$carts = array();
+//Lấy cart từ session về trong trường hợp đã có cart
+if(isset($_SESSION['cart'])){
+$carts = $_SESSION['cart'];
+?>
 <body>
 <div style="height: auto;width: 100%;display: flex;margin-bottom: 3%">
     <div style="height: 100%;width: 100%">
@@ -38,20 +47,10 @@ include_once '../Layout/Header.php';?>
             <th style="background: none">Ảnh và tên sản phẩm</th>
             <th style="background: none">Đơn giá</th>
             <th style="background: none">Số lượng</th>
-            <th style="background: none">Tổng tiền</th>
+            <th style="background: none">Tổng tiền của sản phẩm này</th>
             <th style="background: none">Hành động</th>
         </tr>
         <?php
-        include_once '../Layout/Header.php';
-        //Mở kết nối
-        include_once '../../Connects/open.php';
-        $count_money = 0;
-        //Trong trường hợp chưa có cart ở trên session
-        $carts = array();
-        //Lấy cart từ session về trong trường hợp đã có cart
-        if(isset($_SESSION['cart'])){
-            $carts = $_SESSION['cart'];
-        }
         foreach ($carts as $id => $quantity){
         //Sql lấy thông tin sp theo id
         $sql = "SELECT * FROM books WHERE id = '$id'";
@@ -72,9 +71,7 @@ include_once '../Layout/Header.php';?>
                     <span style="font-size: 1.5rem" ><?= $book['name']; ?> </span>
                 </div>
             </td>
-            <td>
-                <?= $book['price']; ?>
-            </td>
+            <td><?php echo number_format($book['price'], 0, ',', '.'); ?>₫</td>
             <td>
                 <input type="number" value="<?= $quantity; ?>" name="quantity[<?= $id; ?>]" min="1">
             </td>
@@ -84,8 +81,7 @@ include_once '../Layout/Header.php';?>
                 $money = $book['price'] * $quantity;
                 //Tính tổng tiền của các sp có trong trong cart
                 $count_money += $money;
-                echo $money;
-                ?>
+                echo number_format($money, 0, ',', '.'); ?>₫
             </td>
             <td>
                 <!-- Nút xóa, bấm vào sẽ xóa thông tin dựa vào khóa chính `sp_ma` -->
@@ -102,7 +98,7 @@ include_once '../Layout/Header.php';?>
             <td colspan="7">
                 <?php
                 if(!$count_money==0){
-                Echo 'Tổng đơn hàng: '. $count_money .'$';
+                echo 'Tổng tiền: ' . number_format($count_money,0,',',',').'đ';
                 //Hiển thị tổng tiền của các sp có trong cart
                 ?>
             </td>
@@ -158,15 +154,15 @@ if (!$count_money == 0){
         </div>-->
             <div class="form-group">
                 <label for="exampleInputEmail1">Người nhận hàng</label>
-                <input type="text" style="height: 50px;font-size: 1.6rem" class="form-control" id="exampleInputEmail1" name="receiver_name" aria-describedby="emailHelp" placeholder="Nhập Tên">
+                <input type="text" style="height: 50px;font-size: 1.6rem" class="form-control" id="exampleInputEmail1" name="receiver_name" required aria-describedby="emailHelp" placeholder="Nhập Tên">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Số điện thoại</label>
-                <input type="number" style="height: 50px;font-size: 1.6rem" class="form-control" name="receiver_phone" id="exampleInputPassword1" placeholder="Nhập số điện thoại">
+                <input type="number" style="height: 50px;font-size: 1.6rem" class="form-control" name="receiver_phone" id="exampleInputPassword1" required placeholder="Nhập số điện thoại">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Địa chỉ</label>
-                <input type="tel" style="height: 50px;font-size: 1.6rem" class="form-control" name="receiver_address" id="exampleInputPassword1" placeholder="Nhập địa chỉ">
+                <input type="tel" style="height: 50px;font-size: 1.6rem" class="form-control" name="receiver_address" required id="exampleInputPassword1" placeholder="Nhập địa chỉ">
             </div>
             <button class="btn btn-primary" style="margin: 125px 145px">Đặt hàng</button>
         <!--Boostrap-->
@@ -175,7 +171,17 @@ if (!$count_money == 0){
 </div>
 <?php
 include_once '../Layout/Footer.php';
-}
+    }
+}else
+    {
+?>
+<div style="display: flex;justify-content: center;flex-direction: row">
+    <img src="../../image/empty-cart.webp" style="margin-bottom: 100px">
+
+</div>
+<?php
+    include_once '../Layout/Footer.php';
+    }
 ?>
 <!-- End block content -->
 <!--Link xóa toàn bộ sản phẩm trên giỏ hàng-->

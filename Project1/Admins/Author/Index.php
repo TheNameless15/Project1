@@ -1,10 +1,7 @@
 <?php
-//Cho phÃ©p lÃ m viá»‡c vá»›i session
 session_start();
-//Kiá»ƒm tra Ä‘Ã£ tá»“n táº¡i email trÃªn session hay chÆ°a, náº¿u chÆ°a tá»“n táº¡i thÃ¬ cho quay vá» login
-if(!isset($_SESSION['email'])){
-    //Quay vá» trang login
-    header("Location:../home/login.php");
+if(!isset($_SESSION['email-ad'])){
+    header("Location:../Account/login.php");
 }
 ?>
 <!doctype html>
@@ -58,9 +55,9 @@ $start = ($page - 1) * $recordOnePage;
 //Query để lấy dữ liệu từ bảng classes trên db về
 $sql = "SELECT * FROM authors WHERE name LIKE '%$search%' LIMIT $start, $recordOnePage";
 //Chạy query
+include_once '../Layout/Header.php';
 $authors = mysqli_query($connect, $sql);
 include_once '../../Connects/close.php';
-include_once '../Layout/Header.php';
 ?>
 
 <!--<a href="create.php">ADD</a>
@@ -116,7 +113,7 @@ include_once '../Layout/Header.php';
             <div class="menu-right">
                 <form role="search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="Search" name="search" value="<?= $search; ?>">
                     </div>
                 </form>
                 <ul class="nav menu">

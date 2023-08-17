@@ -1,7 +1,8 @@
 <?php
 session_start();
 if(!isset($_SESSION['email'])){
-    header("Location:../home/login.php");
+    //Quay vá» trang login
+    header("Location:../Account/login.php");
 }
 ?>
 <!doctype html>
@@ -28,28 +29,29 @@ if(!isset($_SESSION['email'])){
 <?php
 $id = $_GET['id'];
 include_once '../../Connects/open.php';
+include_once '../Layout/Header.php';
 $sql = "SELECT * FROM categories WHERE id = '$id'";
 $categories = mysqli_query($connect, $sql);
 include_once '../../Connects/close.php';
-foreach ($categories AS $category){
-    ?>
+/*foreach ($categories AS $category){
+    */?><!--
     <form method="post" action="update.php" >
-        <input type="hidden" name="id" value="<?= $category['id'] ?>">
-        Name: <input type="text" name="name" value="<?= $category['name'] ?>"><br>
+        <input type="hidden" name="id" value="<?php /*= $category['id'] */?>">
+        Name: <input type="text" name="name" value="<?php /*= $category['name'] */?>"><br>
         <button>Update</button>
     </form>
-    <?php
-}
-?>
+    --><?php
+/*}
+*/?>
 <div class="grid">
     <div class="row sm-gutter ">
         <div class="col l-3">
             <div class="menu-right">
-                <form role="search">
+              <!--  <form role="search">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
                     </div>
-                </form>
+                </form>-->
                 <ul class="nav menu">
                     <li>
                         <a href="../Layout/Manager.php">

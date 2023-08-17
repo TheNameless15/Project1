@@ -1,8 +1,5 @@
 <?php
 session_start();
-if (!isset($_SESSION['email'])){
-    header('Location: ../Account/Login.php');
-}
 ?>
 <!doctype html>
 <html lang="en">
@@ -91,7 +88,7 @@ if (!isset($_SESSION['email'])){
         $search = $_GET['search'];
     }
     //Khai báo số bản ghi 1 trang
-    $recordOnePage = 5;
+    $recordOnePage = 10;
     //Query để lấy số bản ghi
     $sqlCountRecord = "SELECT COUNT(*) AS count_record FROM books WHERE name LIKE '%$search%'";
     //Chạy query lấy số bản ghi
@@ -110,8 +107,15 @@ if (!isset($_SESSION['email'])){
     //Tính bản ghi bắt đầu của trang
     include_once 'Header.php';
     $start = ($page - 1) * $recordOnePage;
-    $sqlCategoriesBooks = "SELECT books.* , categories.name as book_categories , categories.id  from books inner join categories on books.category_id = categories.id WHERE books.name LIKE '%$search%' ORDER BY price desc LIMIT $start, $recordOnePage";
-    $books = mysqli_query($connect,$sqlCategoriesBooks);
+    $sql = "    SELECT books.* from books 
+                INNER JOIN publishers ON publishers.id = books.publisher_id 
+                INNER JOIN categories ON categories.id = books.category_id 
+                INNER JOIN authors ON authors.id = books.author_id 
+                WHERE (books.name LIKE '$search')
+                OR(books.name LIKE '%$search%') OR (publishers.name LIKE '%$search%') 
+                OR (categories.name LIKE '$search') OR (authors.name LIKE '$search')   
+                ORDER BY price desc LIMIT $start, $recordOnePage";
+    $books = mysqli_query($connect,$sql);
     $sqlCategories = "SELECT * FROM categories";
     $categories = mysqli_query($connect,$sqlCategories);
     include_once '../../Connects/close.php';
@@ -122,7 +126,7 @@ if (!isset($_SESSION['email'])){
     <div class="grid">
         <div class="grid__row app__content">
             <div class="grid__column-2">
-                <nav class="category">
+                <nav class="category" style="background: rgb(150,146,146)">
                     <h3 class="category_heading">
                         <i class="category_heading-icon fa-solid fa-list"></i>
                         Danh mục
@@ -130,7 +134,7 @@ if (!isset($_SESSION['email'])){
                     <?php
                     foreach ($categories as $category){
                         ?>
-                        <ul class="category-list">
+                        <ul class="category-list" style="display: flex;justify-content: center">
                             <li class="category-item ">
                                 <a href="List.php?id=<?= $category['id']?>" class="category-item_link"> <?= $category['name']?> </a>
                             </li>
@@ -142,7 +146,7 @@ if (!isset($_SESSION['email'])){
                 </nav>
             </div>
 
-            <div class="grid__column-10" style="height: 600px">
+            <div class="grid__column-10" style="height: auto">
                 <div class="home-filter" style="background: rgb(133,131,131)">
                     <span class="home-filter__label">Sắp xếp theo</span>
                     <a class="home-filter__btn btn" href="Popular.php" style="text-decoration: none;background: rgb(255,255,255);color: rgb(16,13,13);font-weight: normal">Phổ biến</a>
@@ -150,7 +154,7 @@ if (!isset($_SESSION['email'])){
                     <a class="home-filter__btn btn" href="Best_Seller.php" style="text-decoration: none;background: rgb(255,255,255);color: rgb(16,13,13);font-weight: normal" >Bán chạy</a>
 
                     <div class="select-input" style="background: #ffffff;">
-                        <span class="select-input_label" style="color:rgb(16,13,13);">- Giá cao đến thấp</span>
+                        <span class="select-input_label" style="color:rgb(236,43,43);">- Giá cao đến thấp</span>
                         <i class="fa-solid fa-caret-down"></i>
 
                         <ul class="select-input__list">
@@ -177,8 +181,8 @@ if (!isset($_SESSION['email'])){
                                     </div>
                                     <h4 class="home-product-item__name" style="color: black"> <?= $book['name']?></h4>
                                     <div class="home-product-item__price" style="display: flex; justify-content: space-between">
-                                        <span class="home-product-item__brand" style="font-size: 1.1rem;color: rgb(0,0,0)"><?= $book['book_categories']?></span>
-                                        <span class="home-product-item__price-current" style="font-size: 1.5rem"><?= $book['price'] ?>đ</span>
+                                        <span class="home-product-item__brand" style="font-size: 1.1rem;color: rgb(0,0,0)"><?php foreach ($categories as $category){ if ($book['category_id']== $category['id']){echo $category['name'];}}?></span>
+                                        <span class="home-product-item__price-current" style="font-size: 1.5rem"><?= number_format($book['price'],0,',',',') ?>đ</span>
                                     </div>
                                     <div class="home-product-item__action">
                                             <span class="home-product-item__like  home-product-item__like--liked">

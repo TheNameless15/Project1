@@ -46,7 +46,7 @@ if(isset($_SESSION['id'])){
     //Xóa cart
     unset($_SESSION['cart']);
     //Quay về trang giỏ hàng
-    header("Location:index.php");
+    header("Location:Order_Completion.php");
 } else {
     //Quay về trang login
     header("Location:../Account/login.php");

@@ -3,7 +3,7 @@
 session_start();
 //Kiá»ƒm tra tá»“n táº¡i email trÃªn session hay chÆ°a, náº¿u Ä‘Ã£ tá»“n táº¡i thÃ¬ cho nháº£y sang trang khÃ¡c
 if(!isset($_SESSION['email'])){
-    header("Location:../home/login.php");
+    header("Location:../Account/login.php");
 }
 ?>
 <!doctype html>
@@ -38,6 +38,7 @@ if(!isset($_SESSION['email'])){
 <?php
 $id = $_GET['id'];
 include_once '../../Connects/open.php';
+include_once '../Layout/Header.php';
 $sqlSelectCategory = "SELECT * FROM categories ";
 $categories = mysqli_query($connect,$sqlSelectCategory);
 $sqlSelectPublishers = "SELECT * FROM publishers";
@@ -55,11 +56,11 @@ foreach ($books AS $book){
         <div class="row sm-gutter ">
             <div class="col l-3">
                 <div class="menu-right">
-                    <form role="search">
+                   <!-- <form role="search">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Search">
                         </div>
-                    </form>
+                    </form>-->
                     <ul class="nav menu">
                         <li class="active">
                             <a href="../Layout/Manager.php">

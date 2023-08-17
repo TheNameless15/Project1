@@ -2,9 +2,9 @@
 //Cho phép làm việc với session
 session_start();
 //Kiểm tra đã tồn tại số đth trên session hay chưa, nếu chưa tồn tại thì cho quay về account
-if (!isset($_SESSION['email'])) {
-    //Quay về trang account
-    header("Location: ../Account/login.php");
+if(!isset($_SESSION['email'])){
+    //Quay vá» trang login
+    header("Location:../Account/login.php");
 }
 ?>
 <!doctype html>
@@ -72,7 +72,8 @@ include_once "../../Connects/open.php";
 //Query
 $sql = "SELECT order_details.book_id, order_details.order_id, order_details.price, order_details.quantity,
 		        books.image AS image, books.name AS book_name, books.description,
-		        orders.receiver_name, orders.receiver_phone,orders.receiver_address
+		        orders.receiver_name, orders.receiver_phone,orders.receiver_address,
+		        SUM(order_details.price*order_details.quantity) AS TongDonHang
         FROM order_details
         INNER JOIN books ON books.id = order_details.book_id
         INNER JOIN orders ON orders.id = order_details.order_id
@@ -148,11 +149,11 @@ include_once '../../Connects/close.php';
     <div class="row sm-gutter ">
         <div class="col l-3">
             <div class="menu-right">
-                <form role="search">
+               <!-- <form role="search">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
                     </div>
-                </form>
+                </form>-->
                 <ul class="nav menu">
                     <li >
                         <a href="../Layout/Manager.php">
@@ -275,10 +276,6 @@ include_once '../../Connects/close.php';
                                     <div class="member-cell"></div>
                                 </th>
                                 <th style="font-size: 1.5rem">
-                                    <div class="use-member">Giá</div>
-                                    <div class="member-cell"></div>
-                                </th>
-                                <th style="font-size: 1.5rem">
                                     <div class="use-member">Ảnh Sản Phẩm</div>
                                     <div class="member-cell"></div>
                                 </th>
@@ -304,7 +301,6 @@ include_once '../../Connects/close.php';
                                 <tr>
                                     <?php  foreach ($order_details as $order_detail) {?>
                                     <td style="font-size: 1.5rem"> <?= $order_detail['book_name']?></td>
-                                    <td style="font-size: 1.5rem"><?= $order_detail['price']?></td>
                                     <td style="font-size: 1.5rem"><img width="180px" src="../../image/<?= $order_detail['image']?>"></td>
                                     <td style="font-size: 1.5rem"><?= $order_detail['quantity']?></td>
                                     <td style="font-size: 1.5rem"><?= $order_detail['description']?></td>
@@ -329,15 +325,19 @@ include_once '../../Connects/close.php';
                                 <?php
                             }
                             ?>
+                                <tr>
+                                    <td style="font-size: 1.5rem" colspan="10">Tổng giá đơn hàng: <?= $order_detail['TongDonHang']?>đ</td>
+                                </tr>
                             <tr>
                                 <td colspan="10">
                                     <form method="post" action="process.php">
                                         <input type="hidden" name="id" value="<?= $order['id']; ?>">
                                         <select class="status" name="status" style="width: 150px;margin-left: 22px;padding:5px">
                                             <option value="0"<?php if($order['status'] == 0 ){echo "SELECTED";}?>> Pending </option>
-                                            <option value="1"<?php if($order['status'] == 1 ){echo "SELECTED";}?>> Delivery </option>
-                                            <option value="2"<?php if($order['status'] == 2 ){echo "SELECTED";}?>> Completed </option>
-                                            <option value="3"<?php if($order['status'] == 3 ){echo "SELECTED";}?>> Canceled </option>
+                                            <option value="1"<?php if($order['status'] == 1 ){echo "SELECTED";}?>> Approved </option>
+                                            <option value="2"<?php if($order['status'] == 2 ){echo "SELECTED";}?>> Delivery </option>
+                                            <option value="3"<?php if($order['status'] == 3 ){echo "SELECTED";}?>> Completed </option>
+                                            <option value="4"<?php if($order['status'] == 4 ){echo "SELECTED";}?>> Canceled </option>
                                         </select>
                                         <button type="submit"  class="add-member" style="margin: 20px 42%; ">
                                             OK

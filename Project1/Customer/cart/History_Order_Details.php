@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,27 +18,18 @@
 </head>
 <body>
 <?php
+session_start();
 $account = $_GET['id'];
 //Xem xem có thiếu session lấy không. Tiện gắn $_Session[id] vào $ account luôn ?
-if(isset($_SESSION['id'])){
+/*if(isset($_SESSION['id'])){
     $account = $_SESSION['id'];
-}
+}*/
 include_once '../../Connects/open.php';
-include_once '../Layout/Header.php';
 //Query
-$sql = "SELECT order_details.book_id, order_details.order_id, order_details.price, order_details.quantity,
-		        books.image AS image, books.name AS book_name, books.description,
-		        orders.receiver_name, orders.receiver_phone,orders.receiver_address,orders.*,
-                categories.name as cat_name , categories.id as cat_id , publishers.id as pub_id, 
-                publishers.name as pub_name ,authors.id as au_id , authors.name as au_name,
-                ROUND(SUM(order_details.price * order_details.quantity)) as TongDonHang
-        FROM order_details
-        INNER JOIN books ON books.id = order_details.book_id
-        INNER JOIN orders ON orders.id = order_details.order_id
-        inner join categories on books.category_id = categories.id 
-        inner join publishers on books.publisher_id = publishers.id 
-        inner join authors on books.author_id = authors.id
-        WHERE order_details.order_id = '$account'";
+$sql = "SELECT order_details.*, books.name , books.image
+        FROM order_details 
+        INNER JOIN books ON order_details.book_id = books.id
+        WHERE order_id = '$account'";
 //Chạy query cua $sql chinh
 $order_details = mysqli_query($connect, $sql);
 // Chay query cua $sqlOrder de tim ai order
@@ -47,57 +39,53 @@ $orders = mysqli_query($connect,$sqlOrder);
 //Đóng kết nối
 $sqlDetails = "SELECT books.* , categories.name as cat_name , categories.id as cat_id , publishers.id as pub_id , publishers.name as pub_name ,authors.id as au_id , authors.name as au_name FROM books inner join categories on books.category_id = categories.id inner join publishers on books.publisher_id = publishers.id inner join authors on books.author_id = authors.id WHERE books.id = '$account' ";
 $books = mysqli_query($connect,$sqlDetails);
-include_once '../../Connects/close.php';
 ?>
-<div style="width: 100%;height: 80%">
-<table cellpadding="0" cellspacing="0" align="center" style="margin-bottom:125px " >
-<tr>
-    <th>Order ID</th>
-    <th>Book Price</th>
-    <th>Book Quantity</th>
-    <th>Book Image</th>
-    <th>Book Description</th>
-    <th>Book Author</th>
-    <th>Book Publisher</th>
-    <th>Book Categories</th>
-<!--    <th>Giá</th>-->
-<!--    <th>Số lượng</th>-->
-<!--    <th>Thông tin mô tả</th>-->
-   <!-- <th>Tác Giả</th>
-    <th>Nhà sản xuất</th>
-    <th>Thể loại</th>-->
-</tr>
-    <tr>
-      <!--  <?php
-/*       foreach ($orders as $order){
-        */?>
-            <td><?php /*=$order['id']*/?></td>
-            <td>
-                <?php
-/*               if ($order['status'] == 0){echo "Pending";}
-                else if ($order['status'] == 1){echo "Delivering";}
-                else if ($order['status'] == 2){echo "Completed";}
-                else if ($order['status'] == 3){echo "Canceled";}
-                */?>
-            </td>
-            <td>
-                <?php /*=$order['date_buy']*/?>
-            </td>
-        --><?php
-/*       }
-        */?>
 
+<div style="width: 100%;height: 100%"><!--App-->
+    <div style="width: 100%;height: 140px"><!--Header width=max, height 140-->
+        <?php
+        include_once '../Layout/Header.php';
+        ?>
+    </div>
+       <!--content--> <div style="height: 500px;width: 100%;display: flex;background:#a6a2a2">
+        <div style="height: 500px;width: 20%;background: #9a9898 ;display: flex;flex-direction: column ;justify-content: space-around;align-items: center">
+            <div style="height: 35px">
+                <a href="../Layout/Main.php" style="text-decoration: none">
+                    <i class="fa-solid fa-house fa-lg"></i>
+                    <span style="color: #FFFFFF">Quay về trang chủ</span>
+                </a>
+            </div>
+            <div>
+                <a href="index.php" style="text-decoration: none">
+                    <i class="fa-solid fa-cart-shopping fa-lg"></i>
+                    <span style="color: #FFFFFF">Quay về giỏ hàng</span>
+                </a>
+            </div>
+            <div>
+                <a href="index.php" style="text-decoration: none">
+                    <i class="fa-solid fa-clock-rotate-left fa-lg"></i>
+                    <span style="color: #FFFFFF">Quay về lịch sử đặt hàng</span>
+                </a>
+            </div>
+        </div>
+        <div style="width: 80%">
+<table cellpadding="0" cellspacing="0" align="center" style="margin-bottom:125px;height: auto " >
+    <tr>
+        <th>Thông tin sản phẩm</th>
+        <th>Số lượng </th>
+        <th>Giá</th>
+    </tr>
        <?php  $money = 0;
        foreach ($order_details as $order_detail) {?>
-               <tr>
-        <td style="font-size: 1.5rem"> <?= $order_detail['book_name']?></td>
-        <td style="font-size: 1.5rem"><?= $order_detail['price']?></td>
-        <td style="font-size: 1.5rem"><?= $order_detail['quantity']?></td>
-        <td style="font-size: 1.5rem"><img width="180px" src="../../image/<?= $order_detail['image']?>"></td>
-        <td style="font-size: 1.5rem"><?= $order_detail['description']?></td>
-        <td style="font-size: 1.5rem"><?= $order_detail['au_name']?></td>
-        <td style="font-size: 1.5rem"><?= $order_detail['pub_name']?></td>
-        <td style="font-size: 1.5rem"><?= $order_detail['cat_name']?></td>
+        <tr>
+        <td style="width: 600px">
+            <div style="display:flex;flex-direction: row;justify-content: space-between;width: auto">
+                <div><span><?= $order_detail['name']?> </span></div>
+                <div><img src="../../image/<?= $order_detail['image']?>" style="height: 100px;width: 100px"></div>
+            </div>
+        </td>
+        <td><?=$order_detail['quantity']?></td>
+        <td><?=number_format($order_detail['price'],0,'.','.') . 'đ'?></td>
         </tr>
         <?php
         $money =+ $money;
@@ -105,21 +93,20 @@ include_once '../../Connects/close.php';
        }
         ?>
     <tr>
-    <tr>
         <td colspan="8">
             <?php
-            Echo 'Tổng Tiền Đơn Hàng  : '. $money;
+            Echo 'Tổng Tiền Đơn Hàng  : '. number_format($money,0,'.','.'). 'đ';
             //Hiển thị tổng tiền của các sp có trong cart
             ?>
         </td>
     </tr>
 </table>
-</div>
-<div style="height: 20%">
-<?php
-        include_once '../Layout/Footer.php'
+        </div>
+    </div>
+    <div style="width: 100%;height:136px"><!--Footer-->
+        <?php
+        include_once '../Layout/Footer.php';
         ?>
-
-</div>
+    </div>
 </body>
 </html>

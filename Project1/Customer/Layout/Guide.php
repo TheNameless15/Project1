@@ -17,12 +17,13 @@
 </head>
 <body>
 <?php
+session_start();
 include_once 'Header.php';
 ?>
 <div class="sect-page-left ho-tro" style="width: 100%;float: left;margin: 0px 0px 20px 10px;">
   <div class="title-trang-tinh" style="font-size: 21px;letter-spacing: 1px;line-height: 36px;color: #1a5dff;font-family: 'Arial'">
     Các quy định khi tham gia giao dịch sách</div>
-  <div class="content" style="font-size: 14.5px;letter-spacing: 0px;line-height: 16px;color: #000000;font-family: 'Arial';text-align: justify;">
+  <div class="content" style="font-size: 14.5px;letter-spacing: 0px;line-height: 3;color: #000000;font-family: 'Arial';text-align: justify;">
     <p>
       * Trước khi sử dụng dịch vụ, bạn hãy đọc kỹ Quy chế quản lý hoạt động của Sàn giao dịch thương mại điện tử hội sách trực tuyến.Bằng việc truy cập và sử dụng các dịch vụ trên hội sách trực tuyến bạn đã xác nhận rằng bạn đã đọc, hiểu, và đồng ý với các điều khoản trong Quy chế này.
     </p>

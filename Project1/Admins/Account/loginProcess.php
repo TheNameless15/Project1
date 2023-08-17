@@ -1,7 +1,7 @@
 <?php
 session_start();
-$email = $_POST['email'];
-$password = $_POST['password'];
+$email = $_POST['email-ad'];
+$password = $_POST['password-ad'];
 include_once '../../Connects/open.php';
 $sql = "SELECT *, COUNT(id) AS count_account FROM admins WHERE email = '$email' AND password = '$password'";
 $accounts = mysqli_query($connect, $sql);
@@ -15,8 +15,8 @@ if($count_account == 0){
     header("Location:login.php");
 } else {
     //LÆ°u id, email lÃªn session
-    $_SESSION['id'] = $id;
-    $_SESSION['email'] = $email;
+    $_SESSION['id-ad'] = $id;
+    $_SESSION['email-ad'] = $email;
     header("Location:../Layout/Manager.php");
 }
 ?>
